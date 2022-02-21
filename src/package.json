@@ -1,0 +1,11 @@
+{
+  "name": "trapdoor-wiki",
+  "version": "0.1.1",
+  "description": "tapdoor-wiki",
+  "main": "index.js",
+  "author": "hhhxiao",
+  "license": "MIT",
+  "devDependencies": {
+    "vuepress": "^1.9.7"
+  }
+}
