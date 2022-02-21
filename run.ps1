@@ -1,2 +1,1 @@
-rm dist 
-mv src/docs/.vuepress/dist  .
+mv src/docs/.vuepress/dist/*  .
