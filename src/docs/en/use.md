@@ -1,38 +1,68 @@
 # Application instruction
-## 0. Please read the disclaimer clearly
 
-[免责声明 | Disclaimer](https://github.com/hhhxiao/TrapDoor/blob/1.16.4/trapdoor-disclaimer.md)
+## 0. Read and agree the disclaimer
+
+```
+Disclaimer
+
+Trapdoor (hereinafter referred to as tr) is a BDS auxiliary software (plug-in) developed by using dll remote injection technology. It provides many functions that are convenient for players and creates convenience for players of electricity generation. In addition, tr itself is totally open source and free, there is no malicious code inside, and in principle, it will not cause any damage to the archive.
+
+However, considering the particularity of this type of software, the developer cannot fully guarantee that tr will not cause any damage to the user's level archive. In the event of an accident, the developer will not and cannot be responsible for the loss caused by tr.
+
+If you continue to use tr plugin, you agree to this statement (or user agreement). If you do not want to take such risks, please stop using tr plugin.
+
+Addendum: Here are some usage suggestions:
+- Update the plugin to the new version in time, because the current tr is still a beta version, in theory, the more you update the fewer bugs
+- Try to turn off unused functions as much as possible
+- It is always a good habit to backup archives in time
+
+2022.1.11
+```
+
+
 
 ## 1. Download BDS
 
-The plugin is BDS based, so you will need to download BDS for it. Link:[https://www.minecraft.net/en-us/download/server/bedrock](https://www.minecraft.net/en-us/download/server/bedrock) Download the **correct** version of BDS and unzip it into any folders
+The plugin is BDS based, so you will need to download BDS for it. Link:[https://www.minecraft.net/en-us/download/server/bedrock](https://www.minecraft.net/en-us/download/server/bedrock) Download the **correct** version of BDS and unzip it into any folder
 
-> Having non-ascii charactors for folder names is not recommended
+:::warning
 
-## 2. LoopBack setting
+Having non-ascii characters for folder names is not recommended
 
-In the default setting of UWP, Loopback is disable which have to be enable to allow connection for local server(`localhost`). **You can skip this step if you are working on a cloud server**
+:::
 
-Please seek help from Google for enabling it. 
-Link for references: [https://stackoverflow.com/questions/33259763/uwp-enable-local-network-loopback](https://stackoverflow.com/questions/33259763/uwp-enable-local-network-loopback)
+## 2. Enable loop back
 
-## 3. Unziping folders
+In the default setting of UWP application, loop back is disable(this means it can not connection to local server). **You can skip this step if your server is on a cloud server**.Open `powershell` with administrator privileges, and run the following command (this command comes from Microsoft's official website):
 
-Unzip`trapdoor-x.y.z-1.a.b.zip`under the BDS folder, check if there are files below:
+```powershell
+CheckNetIsolation.exe LoopbackExempt -a -p=S-1-15-2-1958404141-86561845-1752920682-3514627264-368642714-62675701-733520436
+```
+The following prompt appears, indicating that the operation was successful:
+![](../img/pw.png)
 
-- `trapdoor-x.y.z-1.a.b.dll`
-- `trapdoor-config.json`
-- `lang`(only available in certain versions)
 
-**`.json` and `lang`files are places under the BDS file under normal situation**
+## 3. Download Trapdoor
+Go to [Trapdoor's download page](https://github.com/hhhxiao/TrapDoor/releases) to download the release. The name of release is formated as `trapdoor-{mod version}-{game version}.zip`, Among them, `mod version` indicates the plug-in version, and `game version` indicates the supported game version. Note that **trapdoor is not backward compatible. The version must be strictly corresponding when using it. The three level version number of the plug-in and BDS must be exactly the same**.
+The image below shows the download page:
+![](../img/download.png)
 
-> If trapdoor are having a problem in reading files, it maybe because you are using another dll loader. Which can be solver by  seacrh  `trapdoor.log` in the exploerer ,and place files and language file into the folder where`trapdoor.log`is located.
+Then **unzip the release and copy all files to the root directory of BDS** At this time, the path of the relevant configuration files is as follows:
+```
+└───bedrock-server-xxx
+  └───plugins
+    └───trapdoor
+        ├───trapdoor-config.json
+        └───langs
+```
 
-## 4. Editing file "trapdoor-config"
+:::tip
+In the newer version (0.10+), trapdoor built the language file into the plugin, and the configuration file will be automatically generated at the first startup, so this step can be skipped and you can injectet it in any path.
+:::
 
-`EULA`is added in the newest version. You have to edit `EULA`located at `trapdoor-config` into`true`to run the server.
+## 4. Editing configuration file
 
-It is not necessary to edit `trapdoor-config` , but if you want  to switch on or off certain functions, please do it .Detailed description on page 4 of wiki.
+You can modify the configuration file to turn off some features according to your needs.
 
 ## 5. Injecting dll to start BDS
 
@@ -40,13 +70,12 @@ Use any dll injector(64bits) to inject`trapdoor-x.y.z-1.a.b.dll`into`bedrock_ser
 
 If you are using xenos injecting, follow steps below:
 <br>
-![](https://github.com/hhhxiao/TrapDoor/blob/1.16.4/img/howto.png)
+![](../img/howto.png)
 
 Please check their wiki page if you are using another dll injecting software.
 
-## 6. Activating texture pack
-load the texture pack from client side [https://github.com/OEOTYAN/TrapDoor-CUI](https://github.com/OEOTYAN/TrapDoor-CUI) (**Not from the server side, it has to be loaded from the client side**)
-## 7. Connecting into the server
+## 6. Install resource  pack
+Install the resource pack from client side [https://github.com/OEOTYAN/TrapDoor-CUI](https://github.com/OEOTYAN/TrapDoor-CUI) (**Not from the server side, it has to be loaded from the client side**)
+## 7. Connecting to the server
 
-If you are hosting the server locally, the IP  address would be `127.0.0.1`. Port is using the port stated at `server.property` default: `19132`
-
+If you are hosting the server locally, the IP address is `127.0.0.1`,  port is  configured by `server.property` which is `19132` defaultly.

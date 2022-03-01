@@ -6,17 +6,17 @@ subActionText: Github
 subActionLink: https://github.com/hhhxiao/TrapDoor
 features:
   - title: Vanilla friendly 
-    details: Do not affect level, suitable for vanilla survival & create server  
+    details: Trapdoor won't change the vanilla game features without notice, safe for every server to use  
   - title: Powerful
-    details: Village visualization, change world ticking speed and so on
-  - title: Rich configuration 
-    details: All functions and commands are configurable
-  - title: High compatibility
-    details: Does not require any additional dependencies, compatible with various plugin loaders (such as liteloader) 
-  - title: Keep updating
-    details: Will not stop updating, theoretically
-  - title: Community support 
-    details: Various features are verified and supported by the community, and continue to iterate
+    details: Visible village boundary, tick speed acceleration, server performance analysis
+  - title: Highly configurable 
+    details: Trapdoor allows you to disable, change settings or manage the user privilege for all commands and functions
+  - title: Widely compatible
+    details: Trapdoor doesn't require additional components, support various plugin loaders (such as liteloader)
+  - title: Develop continuously
+    details: Trapdoor would stay long-termly updated, hopefully :)
+  - title: Community support
+    details: All features are verfied and approved by commnuity, and they are still being optimized
 ---
 
 ::: slot heroText
