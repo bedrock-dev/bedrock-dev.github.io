@@ -40,53 +40,33 @@ CheckNetIsolation.exe LoopbackExempt -a -p=S-1-15-2-1958404141-86561845-17529206
 如果该步骤顺利的话`powershell`会输出"完成"二字，如下图所示：
 
 ![](./img/pw.png)
+## 3. 安装LiteLoaderBDS
 
-### 3. 下载并安装插件本体
+参考[LiteLoaderBDS中文安装教程](https://github.com/LiteLDev/LiteLoaderBDS#for-windows)安装服务器对应版本的Liteloader。**如遇到Liteloader相关的问题请前往[这里](https://github.com/LiteLDev/LiteLoaderBDS/issues)这里进行反馈。而不是找本插件开发者**。
 
-前往[Trapdoor的下载页面](https://github.com/hhhxiao/TrapDoor/releases)下载对应版本的文件，下载的文件格式是是`trapdoor-{mod version}-{game version}.zip`，其中`mod version`表示插版本，`game version`表示支持的游戏版本,注意**trapdoor不是向下兼容的，使用时版本一定要严格对应，插件和BDS的三级版本号一定要完全一样**。
-下图展示了下载页面：
-![](./img/download.png)
+## 4. 下载并安装插件本体
 
+1. 前往[Trapdoor的下载页面](https://github.com/hhhxiao/trapdoor-ll/releases)下载发布的release文件
+2. **解压下载到的压缩包，把所有文件复制到BDS的根目录即可**这时候相关配置文件的路径如下所示：
 
-
-**解压下载到的压缩包，把所有文件复制到BDS的根目录即可**这时候相关配置文件的路径如下所示：
 ```
 └───bedrock-server-xxx
   └───plugins
+  	└───trapdoor-xx-xx.dll
     └───trapdoor
-        ├───trapdoor-config.json
-        └───langs
+         └───config.json
 ```
 
-:::tip
-在更新的版本(0.10+)中trapdoor将语言文件内建到了插件内内部，首次启动会自动生成配置文件，因此这一步可以跳过，直接注入即可。
-:::
+## 5. 配置配置文件
 
-## 4. 配置配置文件
+创造服一般可用不配置，生存服可能需要根据需求关闭部分功能(如`tick`，漏斗计数器等)。具体配置参考配置文件一节。
 
-创造服一般可用不配置，生存服可能需要根据需求关闭部分功能(如tick，漏斗计数器等)。具体配置参考配置文件一节。
-
-## 5. 注入dll并启动BDS
-
-使用任意的dll注入器或者mod加载器(注意是**64位**)把plugins文件夹中的`trapdoor-*.dll`注入到`bedrock_server.exe`中并启动，这里有一个可用的开源注入器[https://github.com/DarthTon/Xenos/releases/tag/2.3.2 ](https://github.com/DarthTon/Xenos/releases/tag/2.3.2 )
-
-如果你是使用的`Xenos`这个软件，下面的看图即可:
-
-![](./img/howto.png)
-
-如果你使用其它的BDS专用加载器（如Liteloader等），请去访问它们的wiki页面以获得技术支持。
-
-下面是BDS正常启动以及插件正常加载后的截图：
-
-![](./img/server.png)
-
-如果你在服务器页面看到了Trapdoor的字符画以及类似`Trapdoor init finish,Server started`这一行字就说明插件注入成功了。
 
 ## 6. 加载材质包
-点击[https://github.com/OEOTYAN/Trapdoor-CUI/releases](https://github.com/OEOTYAN/Trapdoor-CUI/releases)下载材质包，然后客户端加载该材质包即可(**不是服务端，是每个玩家都要在本地加载，和普通材质包一样使用**)，加载好的游戏截图如下所示：
+前往[https://github.com/OEOTYAN/Trapdoor-CUI/releases](https://github.com/OEOTYAN/Trapdoor-CUI/releases)下载纹理包，然后客户端加载该纹理包即可(**不是服务端，是每个玩家都要在本地加载，和普通材质包一样使用**)，加载好的游戏截图如下所示：
 
 ![](./img/rsp.png)
 ## 7. 连接服务器进入游戏
 
-如果你是本地开服,ip填`127.0.0.1`或者·`localhost`，如果你用的是云服务器而不是本地，填公网ip即可。端口按照自己的设置在服务器的配置文件里面改，默认`19132`。
+如果你是本地开服,ip填`127.0.0.1`或者·`localhost`，如果你用的是云服务器而不是本地，填公网ip即可(不知道的问你们服务器的服主)。端口按照自己的设置在服务器的配置文件里面改，默认`19132`。
 
