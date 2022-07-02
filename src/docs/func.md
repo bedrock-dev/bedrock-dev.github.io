@@ -95,5 +95,44 @@
 - `player cancal`取消假人的所有重复动作，也就是**解除假人的工作状态**
 - `player`列出服务器所有的假人的状态以及位置
 
+### `village`
 
+> 拥有显示村庄相关信息的能力
 
+```
+/village <spawn|center|bound|poi|head> <onOroff: Boolean>
+/village [info]
+/village [info] <villageID: int>
+/village list
+```
+
+- `village list`列出所有正在加载的村庄，改指令会显示如下格式的数据：
+
+  ```
+  - [vid] [center] r:? p:? g:? b:[bounds]  
+  ```
+
+  其中`vid`表示trapdoor**分配给该村庄的唯一id,除非服务器重启，否则村庄id永远不会重复(在一个服务器实例中，该id和村庄内的UUID唯一对应)**。`center`表示村庄中心坐标，`r`表示村庄半径，`p`表示村庄内的村民数量，`g`表示村庄内的铁傀儡数量，`b`表示村庄内的床的数量，`bounds`表示村庄的范围
+
+- `/village <spawn|center|bound|poi|head> <onOroff: Boolean> `用于开关村庄相关的可视化：
+
+  - `spawn`表示铁傀儡刷新范围
+  - `center`表示村庄中心
+  - `bounds`表示村庄范围
+  - `poi`表示POI的查询范围(我自己也忘了这个范围是做啥的了)
+  - `head`表示在村民头顶显示信息，开启该选项后村民头顶会显示类似`[vid] 1 B M J 4514`这样的数据，其中中括号内的`vid`代表该村民所属的村庄的编号，后面的`1`表示该村民是该村庄的第几号村民，`B M J`分布表示该村民和床，钟，工作方块的绑定情况，绿色代表绑定，红色代表没绑定，最后的数据表示村民体内时钟的实时值。
+
+- `/village [info] <villageID: int>`打印`vid`为`villageID`的村庄的详细数据，id缺省时打印距离玩家最近的村庄，数据格式如下所示：
+
+  ```
+  VID: 1 UUID: 12345678-1234-1234-123456780123
+  - Center
+  - Bounds 
+  - Radius
+  - Dwellers
+  POIs:
+  	Bed 					 |  	Alarm 			| 	Work |
+  [pos]owner/cap/radius/weight | ...
+  ```
+
+  第一行是tr分配给村庄的id以及游戏内村庄的实际UUID，下面四行是村庄的中心，范围，半径以及三种居民(村民，铁傀儡，猫)的数量，后面的就是村庄内部的POI表，该表的第`i`行表示村庄内第`i`个村民绑定的POI的情况，每个POI的数据依次为：坐标，所有者数量，最大容量，POI的半径，POI的权重
