@@ -135,4 +135,61 @@
   [pos]owner/cap/radius/weight | ...
   ```
 
-  第一行是tr分配给村庄的id以及游戏内村庄的实际UUID，下面四行是村庄的中心，范围，半径以及三种居民(村民，铁傀儡，猫)的数量，后面的就是村庄内部的POI表，该表的第`i`行表示村庄内第`i`个村民绑定的POI的情况，每个POI的数据依次为：坐标，所有者数量，最大容量，POI的半径，POI的权重
+  第一行是tr分配给村庄的id以及游戏内村庄的实际UUID，下面四行是村庄的中心，范围，半径以及三种居民(村民，铁傀儡，猫)的数量，后面的就是村庄内部的POI表，该表的第`i`行表示村庄内第`i`个村民绑定的POI的情况，每个POI的数据依次为：坐标，所有者数量，最大容量，POI的半径，POI的权重。
+
+### `data`
+
+> 拥有显示方块/实体/物品数据的能力
+
+```
+/data block [blockPos: x y z] [nbt] [path: string]
+/data entity [nbt] [path: string]
+/data item [nbt] [path: string] 
+/data redstone [blockPos: x y z]
+```
+
+- `/data block [blockPos: x y z] ...`打印位于`blockPos`位置的方块ID,名字等信息,该值缺省时默认为玩家指针指向的方块
+- `/data entity ...` 打印玩家指针指向的实体ID,名字,位置等信息
+- `/data item ... `打印手持物品的相关信息(暂未实装)
+- `/data redstone [blockPos: x y z]`打印位于`blockPos`位置的红石相关信息(目前只支持信号强度)
+
+`data`指令还提供了对nbt的支持,也就是`[nbt] [path: string]`可选子命令：当指令后面加上nbt后插件会打印该方块/物品/实体的nbt数据。`path`提供了简单的nbt数据查询功能，该路由多个`key`或者索引构成，key之间用`.`隔开，下面是几个简单的例子：
+
+1. 打印脚下箱子第1格的物品名字
+
+```
+data block ~ -1 ~ nbt "Items.[0].Name"
+```
+
+2. 打印实体的y轴详细坐标
+
+```
+data entitiy nbt "Pos.[1]" 
+```
+
+### `Spawn`
+
+> 拥有统计实体数量以及分析生物生成的能力
+
+```
+/spawn analyze <stop|clear|start|print>
+/spawn count <all|chunk|density>
+/spawn forcesp <actorType: EntityType> [blockPos: x y z]
+/spawn prob [blockPos: x y z]
+```
+
+- `/spawn analyze ...` 该命令提供了分析自然生物生成的功能
+  - `start` 开始实体生成统计，插件会统计**指令发出者所在维度**的所有自然生物生成情况以及**以指令发出者当前区块为中心的9*9区块**的生物的密度数据。注意：**玩家移动后该密度统计范围并不会改变**
+  - `stop` 停止统计
+  - `print` 打印统计数据。插件会分别打印这次统计中洞穴和露天刷出的生物数量，刷出速度以及平均密度占用等信息 
+  - `clear`清除统计的数据
+- `/spawn count <all|chunk|density>` 分别打印指令发出者所在**维度,区块，以及以指令发出者为中心9*9区块**的每种实体的数量
+- `/spawn prob [blockPos: x y z]` 打印位置`blockPos`处可能生成的生物类型，概率，以及是否可能生成，位置缺省时为指针指向的位置
+- `/spawn forcesp <actorType: EntityType> [blockPos: x y z]` 在`blockPos`处进强制进行一次生成尝试，位置缺省时为指针指向的位置
+
+:::tip 
+
+如果你不懂`prob`和`forcesp`的用途那么无视这两条指令即可
+
+:::
+
