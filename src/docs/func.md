@@ -15,6 +15,34 @@
 
 ## 指令
 
+### `trapdoor`
+
+> 拥有对插件进行配置的能力
+
+```
+/trapdoor hudfreq <frequency: int>
+/trapdoor pm <low|medium|high>
+/trapdoor pvd <maxDistance: int>
+```
+
+- `/trapdoor hudfreq `设置hud信息的更新频率
+- `/trapdoor pm` 设置例子效果的质量，质量越高，显示越清楚，但是对客户端帧率的影响越高
+- `/trapdoor pvd`设置粒子效果的最大显示距离，该功能暂时未实装
+
+### `func`
+
+> 拥有开启或者关闭部分功能的能力
+
+```
+/func blockrotate [onoroff: Boolean]
+/func hoppercounter [onoroff: Boolean]
+/func hud [onoroff: Boolean]
+```
+
+- `/func blockrotate`开启或者关闭仙人掌转方块，该功能暂时没实装
+- `/func blockrotate`开启或者关闭漏斗计数器
+- `/func hud` 开启或者关闭全局HUD开关
+
 ### `tick`
 
 > 拥有改变世界运行速度的能力
@@ -54,7 +82,7 @@
 
 - `numberOfTick`选填参数，指定prof需要执行的gt数，不填时默认为20gt
 
-### `Player`
+### `player`
 
 > 拥有生成假人以及控制假人行为的能力
 
@@ -167,7 +195,7 @@ data block ~ -1 ~ nbt "Items.[0].Name"
 data entitiy nbt "Pos.[1]" 
 ```
 
-### `Spawn`
+### `spawn`
 
 > 拥有统计实体数量以及分析生物生成的能力
 
@@ -192,4 +220,89 @@ data entitiy nbt "Pos.[1]"
 如果你不懂`prob`和`forcesp`的用途那么无视这两条指令即可
 
 :::
+
+### `hud`
+
+> 拥有在屏幕上实时显示文字信息的能力
+
+```
+/hud <add|remove> <redstone|village|hoppercounter|mspt|base>
+/hud show <onoroff: Boolean>
+```
+
+- `hud show`开启或者关闭hud(只针对指令执行者自己，不影响其他玩家)
+- `hud <add|remove>`添加或者移除你想在hud上现实的内容(只针对执指令执行者自己，不影响其他玩家)
+  - `redstone` 显示红石相关信息，目前只有信号强度
+  - `base`显示一些基本的信息，包括当前游戏刻度，玩家坐标，视角，指向的方块坐标，和亮度，当前所处位置的群系等等
+  - `village`显示村庄相关信息，暂时没有实装
+  - `mspt`显示服务器最近`1s`的平均mspt和TPS
+  - `hoppercounter`显示**当前指针指向的频道**的数据(必须要指针指向混凝土才有用)
+
+该功能可通过`func`命令来设置全局开关。
+
+### `hsa`
+
+> 拥有在游戏内可视化结构生成区域(HSA)的能力
+
+```
+/hsa clear
+/hsa place <blockName: Block>
+/hsa show <onOroff: Boolean>
+```
+
+- `hsa show`开启或者关闭HSA显示，开启后插件会在游戏内有HSA的地方使用粒子画出结构的刷怪点，对于游戏内的四种刷怪点，插件有不同的颜色，具体如下所示：
+  - 女巫小屋 红色
+  - 地狱堡垒 绿色
+  - 海底神殿 黄色
+  - 掠夺者前哨站 蓝色
+- `hsa place`在所有缓存的生成点放置指定方块(仅创造模式可用)，暂未没有实装
+- `hsa clear`清除hsa缓存
+
+### `log`
+
+> 拥有打印一些游戏内信息的能力
+
+```
+/log <mspt|tps>
+```
+
+- `log <mspt | tps>`打印最近`1s`的mspt和tps
+
+:::tip
+
+该功能还在建设中，因此功能较少
+
+:::
+
+### `tweak`
+
+> 拥有修改部分原版游戏特性的能力
+
+```
+/tweak autotool <onoroff: Boolean>
+/tweak fcopen <onoroff: Boolean>
+/tweak fcplace <level: int>
+/tweak nocost <onoroff: Boolean>
+```
+
+:::warning
+
+该功能会修改原版游戏，请谨慎使用
+
+:::
+
+- `tweak fcopen` 开启或者关闭强制打开容器，开启后被实体/方块阻挡的箱子也能被强制打开
+- `tweak fcplace`开启或者关闭强制放置方块，后面的level选填`0,1,2`
+  - 0: 原版，不做任何修改
+  - 1: 可以无视实体阻挡强制放置方块，请注意**这会让实体免疫窒息伤害**
+  - 2: 在1的基础上无视几乎所有方块放置限制，比如在石头上放置树苗等等
+- `/tweak nocost `开启或者关闭发射器/投掷器无消耗，开启后发射器和投掷器可以无限发射/投掷，而不产生任何物品消耗
+- `tweak autotool`开启后玩家在挖掘方块时会自动在背包内搜索工具并切换到主手(较OP,请谨慎使用)
+
+### `counter`
+
+```
+/counter print [channel: int]
+/counter reset [channel: int]
+```
 
