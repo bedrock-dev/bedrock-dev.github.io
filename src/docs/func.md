@@ -301,8 +301,21 @@ data entitiy nbt "Pos.[1]"
 
 ### `counter`
 
+> 拥有查看漏斗接受物品速度的能力
+
 ```
 /counter print [channel: int]
 /counter reset [channel: int]
 ```
+
+在使用`func hopper true`开启漏斗计数器后，所有对准**混凝土**的漏斗都将变成无尽的漏斗，所有**流向该漏斗的物品都会消失**，但是这些数据会被插件记录下来，你可以使用`/counter`命令查看这些数据。16种混凝土每一种对应一个频道(根据特殊值)。
+
+- `/counter print [channel: int]`打印频道`channel`的数据(你也可以直接使用仙人掌右键对应颜色的混凝土以达到相同的效果)
+- `/counter reset [channel: int]`清除频道`channel`的数据
+
+注意:从使用`func hopper true`这一刻开始漏斗计数器就开始计时了，而不是其他时间。
+
+## Shortcut
+
+`Shortcut`提供了一些触发器，可以让服务器使用者通过修改配置文件来完成一些自定义功能，详见配置文件一节。
 
