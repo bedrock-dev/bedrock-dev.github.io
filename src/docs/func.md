@@ -76,11 +76,14 @@
 ```
 
 - `prof normal` 进行普通的profile,会列出游戏多个条目的执行时间
+
 - `prof entity`对实体更新进行profile
+
 - `prof chunk`对区块更新进profile
+
 - `prof pt`对计划刻进行profile（该指令暂未实装）
 
-- `numberOfTick`选填参数，指定prof需要执行的gt数，不填时默认为20gt
+`numberOfTick`是选填参数，指定prof需要执行的`gt`数，不填时默认为20gt,如果单独使用`prof`则代表执行`prof normal 100`,相当于一个快捷指令。
 
 ### `player`
 
@@ -263,10 +266,11 @@ data entitiy nbt "Pos.[1]"
 > 拥有打印一些游戏内信息的能力
 
 ```
-/log <mspt|tps>
+/log <mspt|os>
 ```
 
-- `log <mspt | tps>`打印最近`1s`的mspt和tps
+- `log mspt`打印最近`1s`的mspt和tps
+- `log os`打印服务器的CPU占用率和内存使用信息
 
 :::tip
 
