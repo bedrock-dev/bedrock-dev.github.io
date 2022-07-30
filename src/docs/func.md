@@ -40,7 +40,7 @@
 ```
 
 - `/func blockrotate`开启或者关闭仙人掌转方块，该功能暂时没实装
-- `/func blockrotate`开启或者关闭漏斗计数器
+- `/func hoppercounter`开启或者关闭漏斗计数器
 - `/func hud` 开启或者关闭全局HUD开关
 
 ### `tick`
@@ -96,7 +96,8 @@
 /player <name: string> <stop|cancel>
 /player <name: string> attack [repeat] [interval: int] [times: int]
 /player <name: string> backpack [slot: int]
-/player <name: string> destroy [blockPos: x y z] [repeat] [interval: int] [times: int]
+/player <name: string> destroy [repeat] [interval: int] [times: int]
+/player <name: string> destroyon [blockPos: x y z] [repeat] [interval: int] [times: int]
 /player <name: string> interact [repeat] [interval: int] [times: int]
 /player <name: string> jump [repeat] [interval: int] [times: int]
 /player <name: string> set <itemId: Item>
@@ -114,7 +115,8 @@
 下面所有指令都有`[repeat] [interval: int] [times: int]`这三个参数，该参数用于让假人重复当前动作，其中`interval`表示每次重复的间隔，单位是gt，不填表示1gt一次，`times`表示重复次数，不填表示一直重复永远不会停止，**我们称在做重复动作的假人处于工作状态**
 
 - `/player <name: string> attack ...`让假人攻击玩家指针指向的实体，如果实体不存在玩家就会空挥武器
-- `/player <name: string> destroy [blockPos: x y z] ...`让假人破坏位于`blockPos`的位置的方块，默认位置为玩家指针指向的方块
+- `/player <name: string> destroyon [blockPos: x y z] ...`让假人破坏位于`blockPos`的位置的方块，默认位置为玩家指针指向的方块
+- `/player <name: string> destroy ...`让假人破坏位其**视线所指**的的方块，默认位置为玩家指针指向的方块
 - `/player <name: string> interact ...`让假人右键位于玩家指针指向的方块或者实体
 - `/player <name: string> jump ...`让假人原地跳跃
 - `/player <name: string> use <itemId: Item> ...`让假人使用物品，相当于玩家的使用弓箭，三叉戟，吃东西，丢末影珍珠等动作（物品会在背包中自动搜索）
@@ -176,15 +178,18 @@
 /data block [blockPos: x y z] [nbt] [path: string]
 /data entity [nbt] [path: string]
 /data item [nbt] [path: string] 
-/data redstone [blockPos: x y z]
+/data redstone <chunk|conn|signal> [blockPos: x y z]
 ```
 
 - `/data block [blockPos: x y z] ...`打印位于`blockPos`位置的方块ID,名字等信息,该值缺省时默认为玩家指针指向的方块
 - `/data entity ...` 打印玩家指针指向的实体ID,名字,位置等信息
 - `/data item ... `打印手持物品的相关信息(暂未实装)
-- `/data redstone [blockPos: x y z]`打印位于`blockPos`位置的红石相关信息(目前只支持信号强度)
+- `/data redstone <chunk|conn|signal> [blockPos: x y z]`打印位于`blockPos`位置的红石相关信息
+  - `signal` 打印位于`blockPos`处的红石原件的信号强度
+  - `chunk`标记`blockPos`所在区块的所有红石原件
+  - `conn` 标记`blockPos`所在位置的原件(绿色框)、为该原件的所有信号源(红色框)以及该原件提供能量的所有消费者或者电容器(黄色框)，如果你看不懂这个命令是什么意思那就不用管。
 
-`data`指令还提供了对nbt的支持,也就是`[nbt] [path: string]`可选子命令：当指令后面加上nbt后插件会打印该方块/物品/实体的nbt数据。`path`提供了简单的nbt数据查询功能，该路由多个`key`或者索引构成，key之间用`.`隔开，下面是几个简单的例子：
+`data`指令还提供了对nbt的支持,也就是`[nbt] [path: string]`这两个可选子命令：当指令后面加上nbt后插件会打印该方块/物品/实体的nbt数据。`path`提供了简单的nbt数据查询功能，该路由多个`key`或者索引构成，key之间用`.`隔开，下面是几个简单的例子：
 
 1. 打印脚下箱子第1格的物品名字
 
@@ -216,7 +221,7 @@ data entitiy nbt "Pos.[1]"
   - `clear`清除统计的数据
 - `/spawn count <all|chunk|density>` 分别打印指令发出者所在**维度,区块，以及以指令发出者为中心9*9区块**的每种实体的数量
 - `/spawn prob [blockPos: x y z]` 打印位置`blockPos`处可能生成的生物类型，概率，以及是否可能生成，位置缺省时为指针指向的位置
-- `/spawn forcesp <actorType: EntityType> [blockPos: x y z]` 在`blockPos`处进强制进行一次生成尝试，位置缺省时为指针指向的位置
+- `/spawn forcesp <actorType: EntityType> [blockPos: x y z]` 在`blockPos`处进**强制进行一次生成尝试**，位置缺省时为指针指向的位置
 
 :::tip 
 
@@ -238,6 +243,7 @@ data entitiy nbt "Pos.[1]"
   - `redstone` 显示红石相关信息，目前只有信号强度
   - `base`显示一些基本的信息，包括当前游戏刻度，玩家坐标，视角，指向的方块坐标，和亮度，当前所处位置的群系等等
   - `village`显示村庄相关信息，暂时没有实装
+  - `chunk`可视化玩家所在区块的边界
   - `mspt`显示服务器最近`1s`的平均mspt和TPS
   - `hoppercounter`显示**当前指针指向的频道**的数据(必须要指针指向混凝土才有用)
 
@@ -318,6 +324,21 @@ data entitiy nbt "Pos.[1]"
 - `/counter reset [channel: int]`清除频道`channel`的数据
 
 注意:从使用`func hopper true`这一刻开始漏斗计数器就开始计时了，而不是其他时间。
+
+### `slime`
+
+> 拥有可视化史莱姆区块的能力
+
+```
+/slime clear
+/slime range <range: int>
+/slime show <onoroff: Boolean>
+```
+
+- `slime show`开启或者关闭史莱姆区块显示
+- `slime range`设置史莱姆显示范围
+- `slime clear`清除史莱姆区块的数据缓存
+
 
 ## Shortcut
 
