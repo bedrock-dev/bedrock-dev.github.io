@@ -23,11 +23,22 @@
 /trapdoor hudfreq <frequency: int>
 /trapdoor pm <low|medium|high>
 /trapdoor pvd <maxDistance: int>
+/trapdoor <reload|dump>
+/trapdoor crash <token: string>
 ```
 
-- `/trapdoor hudfreq `设置hud信息的更新频率
+- `trapdoor reload`热重载**不包括指令配置**部分的配置文件
+- `trapdoor dump`打印各种配置项的当前值
+- `trapdoor crash`崩服，需要输入配置文件内配置的密钥才能执行
+- `/trapdoor hudfreq `设置hud信息的更新频率，单位是gt
 - `/trapdoor pm` 设置例子效果的质量，质量越高，显示越清楚，但是对客户端帧率的影响越高
-- `/trapdoor pvd`设置粒子效果的最大显示距离，该功能暂时未实装
+- `/trapdoor pvd`设置粒子效果的最大显示距离
+
+:::warning
+
+`trapdoor crash`会造成游戏内的实时数据丢失，请谨慎使用（不知道有什么用就别用）
+
+:::
 
 ### `func`
 
@@ -50,18 +61,17 @@
 ```
 /tick <acc|slow> <times: int>
 /tick <forward|warp> <tickNumber: int>
-/tick <reset|query|freeze>
+/tick <reset|r|query|freeze|fz>
 ```
 
 - `/tick <acc|slow> <times: int>`用于加快或者放慢游戏运行速度为原来的`time`倍或者`1/time`
 
 - `/tick <forward|warp> <tickNumber: int>`用于让世界以较快的速度前进`tickNumber`个游戏刻。其中`forward`是瞬间完成（具体多久取决于服务器CPU，forwarding途中服务器没反应是正常现象，请耐心等待），`warp`是在**不掉刻的前提下**以最快的速度加速运行`tickNumber`个游戏刻。
 
-- `/tick <reset|query|freeze>`
-
-  - `reset`用于重置世界到正常状态
+- `/tick <reset|r|query|freeze|fz>`
+- `reset`或者`r`用于重置世界到正常状态
   - `query`用于查询世界运行状态，如正在以多少倍速的速度运行，`warp`还剩多少个游戏刻等等
-  - `freeze`用于暂停游戏运行
+  - `freeze`或者`fz`用于暂停游戏运行
 
 :::tip
 当游戏正在forward中时无法使用`tick query`是正常现象，不是bug
@@ -125,7 +135,7 @@
 此外`player`还提供了如下三个命令
 
 - `/player stop`用于停止假人当前动作，如挖掘一半的方块停止，吃一半的食物停止，射出正在蓄力的弓箭等
-- `player cancal`取消假人的所有重复动作，也就是**解除假人的工作状态**
+- `player cancel`取消假人的所有重复动作，也就是**解除假人的工作状态**
 - `player`列出服务器所有的假人的状态以及位置
 
 ### `village`
@@ -273,10 +283,13 @@ data entitiy nbt "Pos.[1]"
 
 ```
 /log <mspt|os>
+/log <levelseed|enchantseed>
 ```
 
 - `log mspt`打印最近`1s`的mspt和tps
 - `log os`打印服务器的CPU占用率和内存使用信息
+- `log levelseed`打印世界种子
+- `log enchantseed`打印当前玩家的附魔种子
 
 :::tip
 
@@ -293,21 +306,38 @@ data entitiy nbt "Pos.[1]"
 /tweak fcopen <onoroff: Boolean>
 /tweak fcplace <level: int>
 /tweak nocost <onoroff: Boolean>
+/tweak maxptsize <onoroff: Boolean>
+/tweak safeexplode <onoroff: Boolean>
 ```
 
 :::warning
 
-该功能会修改原版游戏，请谨慎使用
+该功能会修改原版游戏特性，请谨慎使用
 
 :::
 
 - `tweak fcopen` 开启或者关闭强制打开容器，开启后被实体/方块阻挡的箱子也能被强制打开
+
 - `tweak fcplace`开启或者关闭强制放置方块，后面的level选填`0,1,2`
   - 0: 原版，不做任何修改
   - 1: 可以无视实体阻挡强制放置方块，请注意**这会让实体免疫窒息伤害**
   - 2: 在1的基础上无视几乎所有方块放置限制，比如在石头上放置树苗等等
+  
 - `/tweak nocost `开启或者关闭发射器/投掷器无消耗，开启后发射器和投掷器可以无限发射/投掷，而不产生任何物品消耗
+
 - `tweak autotool`开启后玩家在挖掘方块时会自动在背包内搜索工具并切换到主手(较OP,请谨慎使用)
+
+- `/tweak safeexplode` 开启后爆炸将不会破坏地形(包括TNT，魔影水晶和苦力怕的)
+
+- `/tweak maxptsize <onoroff: Boolean>`修改区块更新计划刻的100上限，默认值是100
+
+:::tip
+
+可以使用`trapdoor dump`命令查看所受设置项的当前值
+
+:::
+
+
 
 ### `counter`
 
