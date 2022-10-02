@@ -1,143 +1,148 @@
-# Configuration
+# Customizing
 
-The  code below shows how the `trapdoor-config` looks
+This plugin provides highly customizable config for different needs, the default config will be generated as belows:
+
 ```json
 {
-  "EULA":false,
   "commands": {
-    "/tick": {
+    "tick": {
       "enable": true,
-      "permissionLevel": 1
+      "permission-level": 0
     },
-    "/village": {
-      "enable": true,
-      "permissionLevel": 0
-    },
-    "/prof": {
-      "enable": true,
-      "permissionLevel": 0
-    },
-    "/mspt": {
-      "enable": true,
-      "permissionLevel": 0
-    },
-    "/o": {
-      "enable": true,
-      "permissionLevel": 1
-    },
-    "/c": {
-      "enable": true,
-      "permissionLevel": 1
-    },
-    "/s": {
-      "enable": true,
-      "permissionLevel": 1
-    },
-    "/hsa": {
-      "enable": true,
-      "permissionLevel": 0
-    },
-    "/func": {
-      "enable": true,
-      "permissionLevel": 1
-    },
-    "/counter": {
-      "enable": true,
-      "permissionLevel": 1
-    },
-    "/td?": {
-      "enable": true,
-      "permissionLevel": 0
-    },
-    "/os": {
-      "enable": true,
-      "permissionLevel": 0
-    },
-    "/apicfg": {
-      "enable": true,
-      "permissionLevel": 1
-    },
-    "/draw": {
-      "enable": true,
-      "permissionLevel": 0
-    },
-    "/slime": {
-      "enable": true,
-      "permissionLevel": 0
-    },
-    "/backup": {
-      "enable": true,
-      "permissionLevel": 1
-    },
-    "/self": {
-      "enable": true,
-      "permissionLevel": 0
-    },
-    "/cl": {
-      "enable": true,
-      "permissionLevel": 0
-    },
-    "/dev": {
-      "enable": true,
-      "permissionLevel": 1
-    },
-    "/here": {
-      "enable": true,
-      "permissionLevel": 0
-    },
-    
-    "/l": {
-      "enable": true,
-      "permissionLevel": 1
-    },
-    "/lang":{
-      "enable":true,
-      "permissionLevel": 1
+   ...
+  },
+  "basic-config": {
+    "particle-performance-level": 2,
+    "particle-view-distance": 128,
+    "hud-refresh-freq": 20
+  },
+  "default-enable-functions": {
+    "hud": true,
+    "hopper-counter": false
+  },
+  "default-enable-tweaks": {
+    "force-place-level": 1,
+    "force-open-container": false,
+    "dropper-no-cost": false,
+    "auto-select-tool": false
+  },
+  "shortcuts": [
+    {
+      "type": "use-on",
+      "item": "cactus",
+      "block": "concrete",
+      "prevent": false,
+      "actions": [
+        "counter print {baux}"
+      ]
     }
-  },
-  "lowLevelVanillaCommands":[
-         "stop",
-      "whitelist"
-  ],
-
-  "server":{
-    "levelName": "Bedrock level",
-    "lang": "zh_cn"
-  },
-
-  "village":{
-      "bound": "red",
-      "spawn": "red",
-      "poiQuery": "red",
-      "center": "minecraft:heart_particle"
-  },
-  "functionsEnable":{
-      "hopperCounter": false,
-      "spawnHelper":false,
-      "cactusRotate":false,
-      "simpleDraw":false,
-      "playerStat":false
-    },
-    "selfEnable":{
-      "chunkShow":true,
-      "distanceMeasure":true,
-      "redstoneStick":true
-    }
+  ]
 }
 ```
 
-## Commands
+### commands
 
-All commands have `enable` and `permissionLevel` two options, they represent function on or off and user operation level respectively. While `permissionLevel` is 1, only operators are allow to use the command, and while it is 0, all players are allowed to use.
+`commands` enables every kinds of command and their permission level:
 
-## lowLevelVanillaCommands
+- enabled when `enable` is "1", not registered when "0"
+- `permission-level` repersents the permission level, all players can use when `0`, while only operators can use when `1`
 
-This enables command that are only available at the back end to be ran by operators.
+### basic-config
 
-## Server
+`basic-config` has the basic setting of the plugin, which part of them can be altered by `trapdoor` command
 
-Only `levelName` is available in this option, make sure to keep the file name same as `server-property`, which `backup` needs it to be set properly.
+- `particle-performance-level` alters the render quality of particles, filling in `0,1,2` can change its quality which higher value represents better quality
+- `particle-view-distance` repersents render distance of particles, not rendered if player exceed such distance
+- `hud-refresh-freq` repersents the referesh frequency of `HUD` command, 20gt for default
 
-## Village
+### default-enable-functions
+`default-enable-functions` enables functions in `func` when server starts
 
-Effect on `village` funcions, for `bound`,`spawn`and `poiQuery`,  `white`,`blue`,`red`,`green`and `yellow` are the only option available. For `center`, all particles can be used including self-defined particles from other texture packs.
+### default-enable-tweaks
+
+`default-enable-tweak` enables functions in `tweak` when server starts
+
+
+
+### Advanced functions-Shortcuts
+
+shortcut allows the activation of commands after players has done certain action, three variation supported currently:
+
+1. `use` when player use certain kind of item
+2. `useon` when player right-click certain kind of block with certain item
+3. `command` when player run customized command
+
+You can add unlimited amount of activator in `shortcuts` key to have a variety of functions
+
+#### use activator
+
+This example repersents the use of `cactus` by a player while using `count print` command
+
+```json
+ {
+      "type": "use", //activator type
+      "item": "cactus", //item used, supports input with xx:1 format
+      "prevent": false, //whether it stops the original respond
+      "actions": [ //the commands to be run
+        "counter print"
+      ]
+    }
+```
+
+Build-in variables for command available as follows:
+
+- `iname` item name
+- `iaux` item ID
+- `px` x-coordinate of player
+- `py` y-coordinate of player
+- `pz` z-coordinate of player
+
+#### use-on triggers when players right-click certain block type with certain kind of item
+
+Below show the function of the triggering `count print {baux}` command when a player uses `cactus` to right-click concrete 
+
+```json
+ "shortcuts": [
+    {
+      "type": "use-on", //activator type
+      "item": "cactus", //item used, supports name:aux format
+      "block": "concrete", //right-clicked block name, supports name:aux format
+      "prevent": false, //whether it stops the original respond
+      "actions": [ //the commands to be run
+        "counter print {baux}"
+      ]
+    },
+```
+
+Build-in variable as follows
+
+- `iname` item name
+- `iaux` item ID
+- `bname` block name right-clicked
+- `baux` block ID right-clicked
+- `bx` block x-coordinate
+- `by` block y-coordinate
+- `bz` block z-coordinate
+- `px` player x-coordinate
+- `py` player y-coordinate
+- `pz` player z-coordinate
+
+#### Customized short command
+
+Below shows when `c` command is run, the plugin will run the`/gamemode creative` command as a player
+
+```json
+{
+  "type": "command", //activator type
+  "command": "c", //name of command shortcut
+  "actions": [ //the commands to be run
+    "gamemode creative"
+  ]
+}
+```
+
+Build-in variable as follows
+
+- `px` player x-coordinate
+- `py` player y-coordinate
+- `pz` player z-coordinate
