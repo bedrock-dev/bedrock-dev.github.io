@@ -101,7 +101,9 @@
 
 ```
 /player
+/player <name: string> <drop|droptype> <itemId: Item>
 /player <name: string> <lookat|moveto> [vec3: x y z]
+/player <name: string> follow
 /player <name: string> <spawn|despawn>
 /player <name: string> <stop|cancel>
 /player <name: string> attack [repeat] [interval: int] [times: int]
@@ -118,7 +120,12 @@
 本指令中所有的`name`都表示假人名字，并且是**必填参数**
 
 - `/player <name: string> <spawn|despawn>` 生成和踢出假人(请注意假人死亡后会自动被踢出)
-- `/player <name: string> <lookat|moveto> [vec3: x y z]`让假人看向/走到某个位置
+- `/player <name: string> <drop|droptype>` 假人丢出物品·
+  - `drop`表示丢出该类型物品至多一组（背包内搜索到的第一个槽位全部丢出）
+  - `draptype`表示丢出背包内的**全部该种物品**
+  - `dropall`表示丢出背包内的所有物品
+- `/player <name: string> <lookat|moveto|navto> [vec3: x y z]`让假人看向/直线/寻路走到某个位置
+- `/player <name: string> follow` 让假人跟随指针指向的实体(掉落物除外)，如果指针不指向任何实体，则假人会跟随自己
 - `/player <name: string> set <itemId: Item>`用于设定假人主手物品，假人会自动搜索背包并切换到主手，如果背包没有相关物品假人什么都不会做
 - `/player <name: string> backpack [slot: int]`打印假人背包内的所有物品(slot参数暂时没有实装)
 
@@ -147,6 +154,7 @@
 /village [info]
 /village [info] <villageID: int>
 /village list
+/village dweller
 ```
 
 - `village list`列出所有正在加载的村庄，改指令会显示如下格式的数据：
@@ -156,6 +164,8 @@
   ```
 
   其中`vid`表示trapdoor**分配给该村庄的唯一id,除非服务器重启，否则村庄id永远不会重复(在一个服务器实例中，该id和村庄内的UUID唯一对应)**。`center`表示村庄中心坐标，`r`表示村庄半径，`p`表示村庄内的村民数量，`g`表示村庄内的铁傀儡数量，`b`表示村庄内的床的数量，`bounds`表示村庄的范围
+
+- `/village dweller` 打印指针指向的某个村民所绑定的POI坐标等信息
 
 - `/village <spawn|center|bound|poi|head> <onOroff: Boolean> `用于开关村庄相关的可视化：
 
@@ -252,7 +262,7 @@ data entitiy nbt "Pos.[1]"
 - `hud <add|remove>`添加或者移除你想在hud上现实的内容(只针对执指令执行者自己，不影响其他玩家)
   - `redstone` 显示红石相关信息，目前只有信号强度
   - `base`显示一些基本的信息，包括当前游戏刻度，玩家坐标，视角，指向的方块坐标，和亮度，当前所处位置的群系等等
-  - `village`显示村庄相关信息，暂时没有实装
+  - `village`显示指针指向的村民绑定的POI等信息
   - `chunk`可视化玩家所在区块的边界
   - `mspt`显示服务器最近`1s`的平均mspt和TPS
   - `hoppercounter`显示**当前指针指向的频道**的数据(必须要指针指向混凝土才有用)

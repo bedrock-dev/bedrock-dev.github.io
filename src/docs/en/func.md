@@ -3,21 +3,21 @@
 ## Description
 
 :::tip
-The following description is same as vanilla commands, skip if familliar with it
+The following description is same as vanilla commands, skip if you are familiar with it
 :::
 
 In ALL description of command
 
-- `<>`represents varibles
-- `<a|b|c>`represents choosing one between sub-commands`a,b,c`
-- `<name:type>`represents variable to be input, `name` represents impilcation, `type` represents criteria, identical to vanilla feature
-- `[name:type]` represents unnecessary variable
+- `<>`represents parameter
+- `<a|b|c>`represents choosing one between `a,b,c`
+- `<name:type>`represents parameter to be input, `name` represents parameter tips, `type` represents parameter type, identical to vanilla feature
+- `[name:type]` represents optional parameter 
 
 ## Commands
 
 ### `trapdoor`
 
-> Adjust the plugin's setting
+> Adjust the plugin's settings in game
 
 ```
 /trapdoor hudfreq <frequency: int>
@@ -25,13 +25,13 @@ In ALL description of command
 /trapdoor pvd <maxDistance: int>
 ```
 
-- `/trapdoor hudfreq ` Regulates hud information update frequency
-- `/trapdoor pm` Regulates particles quality, higher its quality, highers the render pressure for client side
-- `/trapdoor pvd` Regulates maximum particle render distance, not done
+- `/trapdoor hudfreq ` Adjust the HUD information refresh frequency
+- `/trapdoor pm` Adjust the particles spawn quality, higher its quality, higher the render pressure for client side
+- `/trapdoor pvd` Adjust maximum particle render distance
 
 ### `func`
 
-> Switch on or off partial functions
+> Enables/Disable some functions
 
 ```
 /func blockrotate [onoroff: Boolean]
@@ -39,13 +39,13 @@ In ALL description of command
 /func hud [onoroff: Boolean]
 ```
 
-- `/func blockrotate` Enables cactus block rotating function, not done
-- `/func hoppercounter` Enables hopper counter
-- `/func hud` Enables global hud display
+- `/func blockrotate` Enables/Disable cactus block rotating function
+- `/func hoppercounter` Enables/Disable hopper counter
+- `/func hud` Enables/Disable global HUD display
 
 ### `tick`
 
-> Change world running speed
+> Change world ticking speed
 
 ```
 /tick <acc|slow> <times: int>
