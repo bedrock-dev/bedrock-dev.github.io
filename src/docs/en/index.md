@@ -1,22 +1,22 @@
 ---
 home: true
-actionText: 查看文档
+actionText: Read texts
 actionLink: /intro/
 subActionText: Github
 subActionLink: https://github.com/hhhxiao/TrapDoor
 features:
-  - title: 尊重原版
-    details: 不会在未告知玩家的前提下修改原版特性，完全适用于生电服
-  - title: 功能强大
-    details: 村庄范围查看，世界加速，服务器性能分析
-  - title: 配置丰富
-    details: 所有指令和功能均可配置运行权限可关闭
-  - title: 兼容性强
-    details: 不需要任何依赖，可以兼容诸如liteloader等任何mod加载器
-  - title: 持续更新
-    details: 理论上不会咕咕咕
-  - title: 社区支持
-    details: 所有功能都经过社区验证和支持,会持续迭代
+  - title: Vanilla-based
+    details: Will not change any vanilla feature without noticing, suitable for technical servers
+  - title: Powerful functions
+    details: Enables inqure of village information, game accelerate, and performance analysis
+  - title: Variated config
+    details: All commands and functions can be enabled or disabled in config
+  - title: High compactibility
+    details: can be used by all kinds of injected such as liteloader
+  - title: Continuous updating
+    details: therotically yes
+  - title: Community support
+    details: All function are variated by community and will continuous update
 ---
 
 ::: slot heroText
@@ -24,7 +24,7 @@ features:
 :::
 
 ::: slot tagline
-专注于原版生电服的基岩版BDS插件，完全开源免费
+Free and open-sourced BDS plugin for vanilla-ish technical servers
 
 :::
 
