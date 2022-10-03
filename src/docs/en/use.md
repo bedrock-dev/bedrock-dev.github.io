@@ -1,81 +1,72 @@
-# Application instruction
+# Installation and Application
 
-## 0. Read and agree the disclaimer
+## 0. Read and agree to the disclaimer
 
-```
+As a user, one has to understand the risk brought by third-parity software before using it. This is to protect developer from unnecessary trouble. Once used Trapdoor, representing one had agreed to the disclaimer.
+
+
+```txt
 Disclaimer
 
-Trapdoor (hereinafter referred to as tr) is a BDS auxiliary software (plug-in) developed by using dll remote injection technology. It provides many functions that are convenient for players and creates convenience for players of electricity generation. In addition, tr itself is totally open source and free, there is no malicious code inside, and in principle, it will not cause any damage to the archive.
+Trapdoor is a dll-inject based BDS plugin which provided better gameplay for technical players. 
+Trapdoor is open-source and free which DO NOT include any malicios code that damage worlds in purpose.
 
-However, considering the particularity of this type of software, the developer cannot fully guarantee that tr will not cause any damage to the user's level archive. In the event of an accident, the developer will not and cannot be responsible for the loss caused by tr.
+Considering Trapdoor's uniqueness, none of the developers can garentee Trapdoor WILL NOT do any damage to worlds. 
+Once if worlds are damaged, none of the developers can and will take the responsibility.
 
-If you continue to use tr plugin, you agree to this statement (or user agreement). If you do not want to take such risks, please stop using tr plugin.
+If one continues using Trapdoor, it repersents one had agreed to the disclaimer.
+Please stop using Trapdoor if you are unwilling to risk.
 
-Addendum: Here are some usage suggestions:
-- Update the plugin to the new version in time, because the current tr is still a beta version, in theory, the more you update the fewer bugs
-- Try to turn off unused functions as much as possible
-- It is always a good habit to backup archives in time
 
+Appendix: Some suggestions to Trapdoor users:
+- Keep your Trapdoor updated to newest version
+- Switch off function unused
+- Backup regularly
 2022.1.11
 ```
 
+## 1. Downlaod BDS
+
+The plugin is BDS-based, which a BDS is required. Please go to [https://www.minecraft.net/en-us/download/server/bedrock](https://www.minecraft.net/en-us/download/server/bedrock) and download the correct version of BDS and decompress into any file.
 
 
-## 1. Download BDS
+## 2. Enable loopback
 
-The plugin is BDS based, so you will need to download BDS for it. Link:[https://www.minecraft.net/en-us/download/server/bedrock](https://www.minecraft.net/en-us/download/server/bedrock) Download the **correct** version of BDS and unzip it into any folder
-
-:::warning
-
-Having non-ascii characters for folder names is not recommended
-
-:::
-
-## 2. Enable loop back
-
-In the default setting of UWP application, loop back is disable(this means it can not connection to local server). **You can skip this step if your server is on a cloud server**.Open `powershell` with administrator privileges, and run the following command (this command comes from Microsoft's official website):
+Default setting of UWP application should have disabled loopback (which stops players to connect to localhost). One must enable it to connect to local servers, but cloud server can skip this step. Start `powershell` with administrative access and run the following command(from microsoft):
 
 ```powershell
 CheckNetIsolation.exe LoopbackExempt -a -p=S-1-15-2-1958404141-86561845-1752920682-3514627264-368642714-62675701-733520436
 ```
-The following prompt appears, indicating that the operation was successful:
-![](../img/pw.png)
+
+If complete, "complete" will be shown on `powershell`
 
 
-## 3. Download Trapdoor
-Go to [Trapdoor's download page](https://github.com/hhhxiao/TrapDoor/releases) to download the release. The name of release is formated as `trapdoor-{mod version}-{game version}.zip`, Among them, `mod version` indicates the plug-in version, and `game version` indicates the supported game version. Note that **trapdoor is not backward compatible. The version must be strictly corresponding when using it. The three level version number of the plug-in and BDS must be exactly the same**.
-The image below shows the download page:
-![](../img/download.png)
+## 3. Install LiteLoaderBDS
 
-Then **unzip the release and copy all files to the root directory of BDS** At this time, the path of the relevant configuration files is as follows:
+Please refer to [LiteLoaderBDS install tutorial](https://github.com/LiteLDev/LiteLoaderBDS#for-windows) and download desired version of LiteLoader**Press [here](https://github.com/LiteLDev/LiteLoaderBDS/issues)to feedback to LiteLoader related problem but not Trapdoor developler.**
+
+## 4. Download and Install plugin
+
+1. Go to [Trapdoor download page](https://github.com/hhhxiao/trapdoor-ll/releases) to download the release document
+2. **Decompress the zip file and copy them to the BDS file** as follows:
+
 ```
 └───bedrock-server-xxx
   └───plugins
+  	└───trapdoor-xx-xx.dll
     └───trapdoor
-        ├───trapdoor-config.json
-        └───langs
+         └───config.json
 ```
 
-:::tip
-In the newer version (0.10+), trapdoor built the language file into the plugin, and the configuration file will be automatically generated at the first startup, so this step can be skipped and you can injectet it in any path.
-:::
+## 5. Customize your config file
 
-## 4. Editing configuration file
+CMPs can skip this step. Some functions should be switched off for SMPs. Please refer to Config page for more details.
 
-You can modify the configuration file to turn off some features according to your needs.
 
-## 5. Injecting dll to start BDS
+## 6. Load texture pack
+Download texture pack at [https://github.com/OEOTYAN/Trapdoor-CUI/releases](https://github.com/OEOTYAN/Trapdoor-CUI/releases) and load with client (**but not server**) as follows:
 
-Use any dll injector(64bits) to inject`trapdoor-x.y.z-1.a.b.dll`into`bedrock_server.exe`and start. Link to an open sourced version: [https://github.com/DarthTon/Xenos/releases/tag/2.3.2 ](https://github.com/DarthTon/Xenos/releases/tag/2.3.2 )
+## 7. Connect your server
 
-If you are using xenos injecting, follow steps below:
-<br>
-![](../img/howto.png)
+If localhost is used, please enter `127.0.0.1` or `localhost` into IP slot. If cloud server is used, enter server's IP address. Please refer to the server.property for ports.
 
-Please check their wiki page if you are using another dll injecting software.
-
-## 6. Install resource  pack
-Install the resource pack from client side [https://github.com/OEOTYAN/TrapDoor-CUI](https://github.com/OEOTYAN/TrapDoor-CUI) (**Not from the server side, it has to be loaded from the client side**)
-## 7. Connecting to the server
-
-If you are hosting the server locally, the IP address is `127.0.0.1`,  port is  configured by `server.property` which is `19132` defaultly.

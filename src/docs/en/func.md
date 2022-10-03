@@ -1,201 +1,348 @@
-## Brief introduction
-Trapdoor plugin provides a large variety of command-activated functions. To have better experience, you are highly recommened to activiate the latest version of Trapdoor CUI texture pack on client side.
+# Functions
 
 ## Description
-For all commands below,
-- `[]`means filling in parameter
-- `[int]`means filling in integers, such as `-1,1,0,12,128`
-- `[bool]`means filling bool, such as `true`(`1`) or`false`(`0`)
-- `[str]`means filling words or symbols
 
-Moreover, for all commands, you can use `?` to seek help, for example:
-```shell
-tick ?
+:::tip
+The following description is same as vanilla commands, skip if familliar with it
+:::
+
+In ALL description of command
+
+- `<>`represents varibles
+- `<a|b|c>`represents choosing one between sub-commands`a,b,c`
+- `<name:type>`represents variable to be input, `name` represents impilcation, `type` represents criteria, identical to vanilla feature
+- `[name:type]` represents unnecessary variable
+
+## Commands
+
+### `trapdoor`
+
+> Adjust the plugin's setting
+
 ```
-will show all `tick` commands and their description
-## Command list
+/trapdoor hudfreq <frequency: int>
+/trapdoor pm <low|medium|high>
+/trapdoor pvd <maxDistance: int>
+```
 
-### `td?`
-It shows all commands that **you are allowed to use**, if it did not show some commands, there is a possibility of command being switched off by the sever operator,or your operation level is not high enough.
+- `/trapdoor hudfreq ` Regulates hud information update frequency
+- `/trapdoor pm` Regulates particles quality, higher its quality, highers the render pressure for client side
+- `/trapdoor pvd` Regulates maximum particle render distance, not done
 
-### `apicfg`
-It is for adjusting the setting of the api of plugin,only two options available.
-- `apicfg pvd [int]`  adjust the visible distance of the particles including village boundary, chunk visualize, etc.
-- `apicfg pm [bool]`  reducing the lag cause by the particles which also reduce the quality of particles
+### `func`
+
+> Switch on or off partial functions
+
+```
+/func blockrotate [onoroff: Boolean]
+/func hoppercounter [onoroff: Boolean]
+/func hud [onoroff: Boolean]
+```
+
+- `/func blockrotate` Enables cactus block rotating function, not done
+- `/func hoppercounter` Enables hopper counter
+- `/func hud` Enables global hud display
 
 ### `tick`
-#### sub-commands
-- `tick fz` stop world ticking
-- `tick slow [int]`  slow down ticking speed to `1gt = 50 * num ms`,`num`is between`[2,64]`
-- `tick acc [int]` accelerate ticking speed to`1gt = 50/num ms`, actual effect depends on how good your server is , which `num` lies between `[2,10]` 
-- `tick fw [int]` tick forward `num` gt, which skips the`num`of gt. If the `num` is too large, it needs to load for a longer time.
-- `tick r` reset the tick speed back to normal game tick speed
-- `tick q` ask for the ticking speed status
-#### Description
-1. After running a large amount of`tick`related command, there is a possibility of players unable to join in the server because of the clock synchronization. This problem is unable to be fixed unless you restart the server.
-2. While using the`tick acc`, prevent having a very large value. Using `prof` command to check mstp and calculate `50/mstp` as the `[int]`
 
-### `mspt`
-Shows the `mspt` and `TPS` in game, reminded that **only 1 gametick is in calculated** and as tasks done in redstone tick is much more than non-redstone tick, it is normal that the mstp is fluctuating. If the value is very large, it means that redstone tick is detected and vice versa. If you want a more reliable value, `prof` is recommended or simply take average of the `mstp` value
+> Change world running speed
 
-At new version of `mstp` when the symbol `#` is in red, it means it is at redstone tick and white means non-redstone tick
+```
+/tick <acc|slow> <times: int>
+/tick <forward|warp> <tickNumber: int>
+/tick <reset|query|freeze>
+```
+
+- `/tick <acc|slow> <times: int>` is for adjusting game speed to `time` or`1/time` of normal game speed
+
+- `/tick <forward|warp> <tickNumber: int>` is for jumping to `tickNumber` gametick forward with a faster speed. `forward` should be done immediately, duration depends on server CPU strenth, `warp` is to run game with fastest speed under 20TPS for `tickNumber`gameticks
+
+- `/tick <reset|query|freeze>`
+
+  - `reset` resets world to normal speed
+  - `query` inquires current world speed and tick remaining for `warp`
+  - `freeze` freezes game
+
+:::tip
+`tick query`command is unavailable during game forwarding
+:::
 
 ### `prof`
 
-- `prof` calculate and display the average value of`100gt`, so it will be taking `5s` for a result. This would be outputted as result:
+> Detect lag source and check the performance of the server
 
->mstp & TPS
->
->time of redstone system ticking
->
->time of chunks loaded and of entities ticking
->
->amount of chunks being ticking and the total tick time
->
->random tick of chunks
->
->block entities ticking 
->
->pending tick 
+```
+/prof <normal|entity|chunk|pt> [numberOfTick: int]
+```
 
-- `prof actor` calculate and display the detailed calculation time for all entities while the game is running, which can also be used to display all entities in ticking area. If the entities shows zero, it means that it is `despawned` during the calculation. An average in `100gt` will be calculated and displayed with the following format:
->entity name, english display, total ticking time (total amount of entities in loaded chunks )
+- `prof normal` Run profile and list duration for loading serveral game contents
 
-### `func`
-It is for switching on or off specific function for all players and server
-- `func rotate [bool]` on or off cactus rotating function, default off
-- `func hopper [bool]` on or off hopper counter, default off
-- `func spawn [bool]` on or off mob spawning rates analysis, default off
-- `func expl [bool]` on or off explosion  destroy blocks (affecting entities but not landscape while on)
-- `func ncud [bool]` on or off NC(neighbor changed) update
+- `prof entity` Run profile for entity system
+
+- `prof chunk` Run profile for chunk updates
+
+- `prof pt` Run profile for pending tick (unavailable yet)
+
+`numberOfTick` Repersents ticks required for sampling prof value, default value would be 100
+
+### `player`
+
+> Summon fakeplayer and control their behavior
+
+```
+/player
+/player <name: string> <lookat|moveto> [vec3: x y z]
+/player <name: string> <spawn|despawn>
+/player <name: string> <stop|cancel>
+/player <name: string> attack [repeat] [interval: int] [times: int]
+/player <name: string> backpack [slot: int]
+/player <name: string> destroy [repeat] [interval: int] [times: int]
+/player <name: string> destroyon [blockPos: x y z] [repeat] [interval: int] [times: int]
+/player <name: string> interact [repeat] [interval: int] [times: int]
+/player <name: string> jump [repeat] [interval: int] [times: int]
+/player <name: string> set <itemId: Item>
+/player <name: string> use <itemId: Item> [repeat] [interval: int] [times: int]
+/player <name: string> useon <itemId: Item> [blockPos: x y z] [repeat] [interval: int] [times: int]
+```
+
+`name` repersents name of a fakeplayer which is a **must-fill variable**
+
+- `/player <name: string> <spawn|despawn>` Summon and kick fakeplayers (fakeplayers will be kicked after dying)
+- `/player <name: string> <lookat|moveto> [vec3: x y z]` Control coordinates that fakeplayer is looking or standing at
+- `/player <name: string> set <itemId: Item>` Set main-hand item for fakaplayer which enables them to search item in inventory, nothing will be happening if no such item exists
+- `/player <name: string> backpack [slot: int]` Print all item in fakeplayer's inventory, slot variables unavailable yet
+
+All of the following commands includeds `[repeat] [interval: int] [times: int]` variables, which enables fakeplayers to repeat certain action.`interval` repersents time interval between action with gt as unit(1gt as default),`times` repersents number of such action will be repeated, **fakeplayers in such status is called "working mode"**
+
+- `/player <name: string> attack ...` Let fakeplayer attack entities, if available, in front of them
+- `/player <name: string> destroyon [blockPos: x y z] ...`Let fakeplayer destroy blocks of certain coordinate
+- `/player <name: string> destroy ...`Let fakeplayer destroy the block which player is pointing to
+- `/player <name: string> interact ...`Let fakeplayer rightclick to interact with block which player is pointing to
+- `/player <name: string> jump ...`Let fakeplayer jump
+- `/player <name: string> use <itemId: Item> ...`Let fakeplayer use item, including bow, trident, food from inventory
+- `/player <name: string> useon <itemId: Item> [blockPos: x y z] ...`Let fakeplayer rightclick block locating at `blockPos` with certain item
+
+`player` also including the following three commands:
+
+- `/player stop` Stop fakeplayer from its action, including destoying block, eating food, etc.
+- `player cancal` Cancel the repeating action of fakeplayer which **they quit "working mode**
+- `player` List all fakeplayer on the server and their position respectively
+
 ### `village`
-It is for village related commands
-- `village list` lists **all ticking village**, update once per `1s`
-- `village b [bool]` on or off visualizing village boundary, red at default
-- `village c [bool]` on or off visualizing village center, heart particle as default
-- `village s [bool]` on or off visualizing iron golem spawning area (if inaccurate area is displayed, please contact developer), red at default
-- `village p [bool]` on or off displaying POI requesting boundary, red at default
-- `village v [bool]` on or off village info display, `B M J` will be displayed above villagers' head which represent `Bed`, `Bell` and `Job` respectively which red represent non-linked and green represent linked. Attacking the villager will show the village center and POI linked while attacking iron golem can show the village center which the iron golem is in. When this function is enabled, it will not do any damage to villager and iron golem while attacking it.
-- `village n`lists all detail information of the nearest village including all POI and the linking relationship
-> Color of the boundary display and the particle for village center display can be set in the `trapdoor-config.json`
+
+> Inquire village information
+
+```
+/village <spawn|center|bound|poi|head> <onOroff: Boolean>
+/village [info]
+/village [info] <villageID: int>
+/village list
+```
+
+- `village list`List all loaded village in the following format:
+
+  ```
+  - [vid] [center] r:? p:? g:? b:[bounds]  
+  ```
+
+  Which `vid` represents the **unique ID that Trapdoor gave to the village, the id will not change unless server is restarted(in a server, the ID is corresponded to the village's UUID**。`center`represents coordinates of village centre, `r` represents village radius, `p` represents the amount of villagers，`g` represents amount of iron golems, `b` represents amount of beds, `bounds` represents village boundary
+
+- `/village <spawn|center|bound|poi|head> <onOroff: Boolean> ` enables visualizing village information, which:
+
+  - `spawn` represents spawning area of iron golem
+  - `center` represents village centre
+  - `bounds` represents village boundary
+  - `poi` represents POI searching area
+  - `head` represents displaying information of villagers above their head with `[vid] 1 B M J 4514` format, which `vid` represents the number of village it belongs, `1` represents the numerical order of villager in its belonging village, `B M J` represents the linking status of bed, bell, and work station respectively, green for bineded while red is not, the last value represents the TS value of the villager.
+
+- `/village [info] <villageID: int>` represents printing of detailed information for the village with the given `vid`, if ID is not inputed, nearest village's information will be printed instead as followings:
+
+  ```
+  VID: 1 UUID: 12345678-1234-1234-123456780123
+  - Center
+  - Bounds 
+  - Radius
+  - Dwellers
+  POIs:
+  	Bed 					 |  	Alarm 			| 	Work |
+  [pos]owner/cap/radius/weight | ...
+  ```
+
+  the first line is the village ID given by Trapdoor and the actual UUID of the village, the following four lines represents center, area, radius and residents(including villagers, iron golems, cats) respectively. Followed by the POI table which the `i`th row shows the POI linking status of the `i`th villager. the POI data, including coordinates, amount of owner, max capacity, POI radius and POI rates, are listed in order under the POI.
+
+### `data`
+
+> Enables display of blocks, entities and item data
+
+```
+/data block [blockPos: x y z] [nbt] [path: string]
+/data entity [nbt] [path: string]
+/data item [nbt] [path: string] 
+/data redstone <chunk|conn|signal> [blockPos: x y z]
+```
+
+- `/data block [blockPos: x y z] ...` prints information of the block located at `blockPos` including block ID, name, if absent, pointed block will be printed
+- `/data entity ...` prints entity information which command user is pointing at
+- `/data item ... ` prints item information which is on command user's hand
+- `/data redstone <chunk|conn|signal> [blockPos: x y z]` prints redstone status of which located at `blockPos`
+  - `signal` prints redstone strength of the redstone component located at`blockPos`
+  - `chunk` marks every redstone component of the chunk which `blockPos` locates
+  - `conn` marks the redstone component which located at `blockPos` which green box, source of redstone signal with red box, consumers supplied by yellow boxed component with yellow box
+
+`data` command also have nbt data supported, which `[nbt][path:string]' are available for use:
+Adding of `nbt` behind command will print nbt data of the block/item/entity.
+`path` provides simple nbt checking function which is made by several `key` and tags which keys are separated with `.`, examples as follow:
+
+1. Print the first slot of the chest under the command user:
+
+```
+data block ~ -1 ~ nbt "Items.[0].Name"
+```
+
+2. Print the detailed y-coordinate of an entity
+
+```
+data entitiy nbt "Pos.[1]" 
+```
+
+### `spawn`
+
+> Enables counting of entities and analysing of spawning behavior
+
+```
+/spawn analyze <stop|clear|start|print>
+/spawn count <all|chunk|density>
+/spawn forcesp <actorType: EntityType> [blockPos: x y z]
+/spawn prob [blockPos: x y z]
+```
+
+- `/spawn analyze ...` enables analyze of spawning ability
+  - `start` starts counting of spawning of the **dimension where command user is located** and the **density check of the player when command is sent**.
+  - `stop` stops the counting
+  - `print` prints the counted value, including surface spawn, cave spawn, speed of spawning, and average density check occupation
+  - `clear` clear counted data
+- `/spawn count <all|chunk|density>` prints the amount of entites of the dimension, chunk and 9*9 chunk that player is located at respectively
+- `/spawn prob [blockPos: x y z]` prints possibility all mobs spawning at `blockPos` and their corrisponding spawning type, rates and ability to spawn. If unavailable, pointed block coordinates will be used
+- `/spawn forcesp <actorType: EntityType> [blockPos: x y z]` **forcibly** spawns a mob at `blockPos`. If unavailable, pointed block coordinates will be used
+
+:::tip 
+
+Skip `prob` and `forcesp` if you do not understand their usage
+
+:::
+
+### `hud`
+
+> Enables display of HUD on screen
+
+```
+/hud <add|remove> <redstone|village|hoppercounter|mspt|base>
+/hud show <onoroff: Boolean>
+```
+
+- `hud show` enables hud for yourself
+- `hud <add|remove>` enables partial information on HUD for yourself
+  - `redstone` displays redstone strength
+  - `base` displays basic infomation including gameticks, coordinates, angle of view, pointed block coordinate, brightness and biome
+  - `village` displays village information, unavailable yet
+  - `chunk` visualizes chunk boarder of the loacated chunk
+  - `mspt` displays the mspt and tps of the past second
+  - `hoppercounter` display cooresponding hopper counter of specific concrete color 
+
+This function can be enabled by `func` command
 
 ### `hsa`
-- `hsa show [bool]`shows the hsa at specific structures, which red represents `fortress`, green for `witch hut`, blue for `ocean monument` and yellow for `pillager outpost` (due to bugs of render dragon, hsa in fortress are unable to display at version `1.16.201` or above)
-- `hsa draw [bool]` place block under hsa
-- `hsa clear` clear hsa data and print amount of cleared hsa data
-### `slime`
 
-- `slime show [bool]` on or off slime chunk display, updated each `5s`
-- `slime c`clear and re-calculate the slime chunk saved
-- `slime r [int]` set the radius of slime chunk display being visualize with radius: `r`
-### `spanwcounter`
-
-> Function removed as potential risk of corruption
-
-This command support mob spawning analysing supports
-- `spawncounter s` start counting mob spawning
-- `spawncounter e` stop counting mob spawning
-- `spawncounter p`print result
-### `o,s,c`
-An extension of `gamemode` command
-- `o` switch to spectator mode
-- `s` switch to survival mode
-- `c` switch to creative mode
-
-### `OS`
-
-Display server usage information,
+> Enables visualizing of hard-coded spawning area(HSA)
 
 ```
-CPU : 12%
-Mem: 170MB VMem 171MB
-Read/Write: 1203/1234 KB
+/hsa clear
+/hsa place <blockName: Block>
+/hsa show <onOroff: Boolean>
 ```
 
-### `self`
+- `hsa show` enables visualizing of HSA, particals will be used to display the HSA, with different color refering different type of HSA
+  - Witch hut        - Red
+  - Fortress         - Green
+  - Ocean Monument   - Yellow
+  - Pillager Outpost - Blue
+- `hsa place` places specific block of all HSA cache, unavailable yet
+- `hsa clear` clears the HSA cache
 
-Display player's personal information which will not affect other players
+### `log`
 
-- `self`display chunk location, direction facing,biome name ,dimension and some other info
-- `self chunk [bool]`display chunk border where the player is located
-- `self me [bool]` on or off measuring function
-- `self rs [bool]` on or off signal source displaying
+> Enables printing of some game information
 
-### `backup`
+```
+/log <mspt|os>
+```
 
-This is backup-related function, which needs to fill  level name in config file before using
+- `log mspt` prints the mspt and tps for the past second
+- `log os` prints the CPU and RAM occupation status
 
-- `backup b`backup the world
-- `backup l`list all backups
-- `backup crash`crash server
+:::tip
 
-All world files are not compressed and copied into the `trapdoor-backup` folder
+More function developing
 
-### `draw`
+:::
 
-Have to enable `func draw true` before using
+### `tweak`
 
-This command has increased the possibility of `fill` command and enable drawing circle and sphere
+> Enables functions that change vanilla feature
 
-All filling block will be the block below the player
+```
+/tweak autotool <onoroff: Boolean>
+/tweak fcopen <onoroff: Boolean>
+/tweak fcplace <level: int>
+/tweak nocost <onoroff: Boolean>
+```
 
-- `draw ci [int]`fill a circle with radius of `abs(num)` while num>0 it will filled with solid, (num)<0 will be filling with hollow
-- `draw sp [int]`fill a sphere which using basically the same system mentioned above
+:::warning
 
-> This command is not working if player is standing on block which height 1.5 (blame hhhxiao, he is not planning to fix kekw)
+This command changes vanilla feature, think twice before using
+
+:::
+
+- `tweak fcopen` enables forcibly opening containers
+- `tweak fcplace` enables forcibly placing of blocks with level of `0,1,2`
+  - 0: vanilla
+  - 1: ignores entities
+  - 2: ignores all placing condition
+- `/tweak nocost ` enables dropper/dispenser to drop/dispense without any cost
+- `tweak autotool` enables automatic searching of suitable tools when destroying blocks
 
 ### `counter`
 
-Have to enable`func hopper true`before using
+> inquire the speed of item entering hopper
 
-Hopper counter is for counting the amount of item collected
+```
+/counter print [channel: int]
+/counter reset [channel: int]
+```
 
-After using `/func hopper true`, if the hopper is not aiming at any color of concrete but not chests, the hopper will become infinite hopper which all items absorbed into hopper with not enter any slot of the hopper but data will be recorded. By using `counter p channel`, you can check the data of item collected by hopper, amount of item and the rate of item entering the hopper. Using `/counter reset [channel]` can reset hopper data of all channels which `[channel]` is `[0-15]`. Once if you are not sure about which channel do the color represents, you can right click with a cactus to show specific channels.
+After using `func hopper true`, all hoppers pointing to concrete will have unlimited volume, all items entering the hopper dissapear, but recorded. Using `counter` command can show these data
 
-### `fakeplayer`
- > Experimental function, please download code to recomplie
+- `/counter print [channel: int]` prints data in `channel`, right clicking corresponding concrete also works
+- `/counter reset [channel: int]` clears data in `channel`
 
- trapdoor **can not create a fakeplayer**, it can only interact with  [fake player software](https://github.com/ddf8196/FakePlayer) . After activating the websocket of fake player,players are able to control fake player in game
-- `fakeplayer conn [str]`connect with fake player software, which `str` is the link of websocket, such as `ws://127.0.0.1:1234`
-- `fakeplayer add [str]` adding fake player to spawn
-- `fakeplayer remove [str]`removing fake player
-- `fakeplayer list [str]` list all fake player
-- `fakeplayer tp [str]` teleport fake player to where the player located
+Note: Hopper counter counts from the gametick when `func hopper true` is used
 
-## Functions
-The following is some of non-command function
-### Cactus rotating function
-Can be used after enabling `func rotate true`.
-Right clicking the block can rotate specific blocks such as all slabs, stairs and redstone components
+### `slime`
 
-### Chunk visualizing
+> Enables visualizing of slime chunks
 
-Need to enable `self chunk true` before using
+```
+/slime clear
+/slime range <range: int>
+/slime show <onoroff: Boolean>
+```
 
-Enabling it can display the chunk boarder which green grid represents slime chunks and white grid represents normal chunks(major purpose is to replace the chunk boarder pack outdated since `1.16.200`)
-
-### Mob spawning function
-
-Need to enable`func spawn true` before using
-- right click on blocks with bones can show the process spawning spot choosing of the Y axis
-- right click on blocks with gun powder can show the spawning rates of hostile mob
-- right click on the feather can show passive mob spawning rates while at `light level 15`
-
-### Measuring
-
-Need to enable `self me true` before using
-
-Right click a point with wooden sword, then right click another one with a wooden one, then it will output:
->Coordinates of  two points
-> 
-> Y-axis considered while calculating ; Euclidean Distance ; Manhattan distance
-> 
-> Y-axis not considered while calculating ; Euclidean Distance ; Manhattan distance
+- `slime show` enables the display of slime chunks
+- `slime range` adjusts display range of slime chunks
+- `slime clear` clear slime chunk cache
 
 
+## Shortcut
 
-### Signal source finder
+`Shortcut` provides some shortcut for server users to customize functions by editing config.
 
-Need to enable `self rs true` before using
-
-Right click the redsone component with wooden rod, replaying the strength of the redstone component (meaningless for repeater), which shows the coordinate of the signal source and its strength also showing white particles above the signal source.

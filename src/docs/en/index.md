@@ -1,22 +1,22 @@
 ---
 home: true
-actionText: Documentation 
-actionLink: /en/intro/
+actionText: Read texts
+actionLink: /intro/
 subActionText: Github
 subActionLink: https://github.com/hhhxiao/TrapDoor
 features:
-  - title: Vanilla friendly 
-    details: Trapdoor won't change the vanilla game features without notice, safe for every server to use  
-  - title: Powerful
-    details: Visible village boundary, tick speed acceleration, server performance analysis
-  - title: Highly configurable 
-    details: Trapdoor allows you to disable, change settings or manage the user privilege for all commands and functions
-  - title: Widely compatible
-    details: Trapdoor doesn't require additional components, support various plugin loaders (such as liteloader)
-  - title: Develop continuously
-    details: Trapdoor would stay long-termly updated, hopefully :)
+  - title: Vanilla-based
+    details: Will not change any vanilla feature without noticing, suitable for technical servers
+  - title: Powerful functions
+    details: Enables inqure of village information, game accelerate, and performance analysis
+  - title: Variated config
+    details: All commands and functions can be enabled or disabled in config
+  - title: High compactibility
+    details: can be used by all kinds of injected such as liteloader
+  - title: Continuous updating
+    details: therotically yes
   - title: Community support
-    details: All features are verfied and approved by commnuity, and they are still being optimized
+    details: All function are variated by community and will continuous update
 ---
 
 ::: slot heroText
@@ -24,7 +24,8 @@ features:
 :::
 
 ::: slot tagline
-Focused on the vanilla game technology, Open Source and Free 
+Free and open-sourced BDS plugin for vanilla-ish technical servers
+
 :::
 
 ::: slot footer
