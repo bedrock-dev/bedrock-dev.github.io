@@ -61,7 +61,7 @@
 | keep-sim-player-inv        | 假人死亡或者被despawn时是否保留背包数据                      |
 | server-crash-token         | 手动崩服时需要输入的密钥                                     |
 | sim-player-prefix          | 生成假人时自动添加的前缀                                     |
-| use-client-level           | 是否读取`$AppData$`目录下的客户端存档而不是服务器根目录`worlds`下的(暂未开放) |
+| use-client-level           | 是否读取`$AppData$`目录下的客户端存档而不是服务器根目录`worlds`下的存档(暂未开放) |
 
 ## default-enable-functions
 `default-enable-functions`内配置了`func`内功能在开服时是否默认开启，详见功能一节的`func`命令
