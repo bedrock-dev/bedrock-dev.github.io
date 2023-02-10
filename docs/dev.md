@@ -12,8 +12,9 @@ md build
 ## 配置Cmake
 进入`build`目录后执行
 ```shell
-cmake ..  -DCMAKE_BUILD_TYPE=Release
+cmake ..  -DCMAKE_BUILD_TYPE=Release -DDEV=OFF
 ```
+
 ## 使用cmake进行编译
 
 在`build`目录内执行
