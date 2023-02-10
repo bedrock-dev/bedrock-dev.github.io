@@ -20,11 +20,11 @@
 > 拥有对插件进行配置的能力
 
 ```
+/trapdoor <reload|dump>
+/trapdoor crash <token: string>
 /trapdoor hudfreq <frequency: int>
 /trapdoor pm <low|medium|high>
 /trapdoor pvd <maxDistance: int>
-/trapdoor <reload|dump>
-/trapdoor crash <token: string>
 ```
 
 - `trapdoor reload`热重载**不包括指令配置**部分的配置文件
@@ -60,13 +60,13 @@
 
 ```
 /tick <acc|slow> <times: int>
-/tick <forward|warp> <tickNumber: int>
-/tick <reset|r|query|freeze|fz>
+/tick <forward|fw|warp> <ticks: int>
+/tick <r|reset|query|freeze|fz>
 ```
 
 - `/tick <acc|slow> <times: int>`用于加快或者放慢游戏运行速度为原来的`time`倍或者`1/time`
 
-- `/tick <forward|warp> <tickNumber: int>`用于让世界以较快的速度前进`tickNumber`个游戏刻。其中`forward`是瞬间完成（具体多久取决于服务器CPU，forwarding途中服务器没反应是正常现象，请耐心等待），`warp`是在**不掉刻的前提下**以最快的速度加速运行`tickNumber`个游戏刻。
+- `/tick <forward|r|warp> <ticks: int>`用于让世界以较快的速度前进`tickNumber`个游戏刻。其中`forward`(或`r`)是瞬间完成（具体多久取决于服务器CPU，forwarding途中服务器没反应是正常现象，请耐心等待），`warp`是在**不掉刻的前提下**以最快的速度加速运行`tickNumber`个游戏刻。
 
 - `/tick <reset|r|query|freeze|fz>`
 - `reset`或者`r`用于重置世界到正常状态
@@ -91,7 +91,7 @@
 
 - `prof chunk`对区块更新进profile
 
-- `prof pt`对计划刻进行profile（该指令暂未实装）
+- `prof pt`对计划刻进行profile
 
 `numberOfTick`是选填参数，指定prof需要执行的`gt`数，不填时默认为20gt,如果单独使用`prof`则代表执行`prof normal 100`,相当于一个快捷指令。
 
@@ -102,17 +102,20 @@
 ```
 /player
 /player <name: string> <drop|droptype> <itemId: Item>
-/player <name: string> <lookat|moveto> [vec3: x y z]
-/player <name: string> follow
-/player <name: string> <spawn|despawn>
+/player <name: string> <lookat|moveto|navto> <vec3: x y z>
+/player <name: string> <spawn|dropall|info|despawn|swap>
 /player <name: string> <stop|cancel>
 /player <name: string> attack [repeat] [interval: int] [times: int]
-/player <name: string> backpack [slot: int]
+/player <name: string> backpack
 /player <name: string> destroy [repeat] [interval: int] [times: int]
 /player <name: string> destroyon [blockPos: x y z] [repeat] [interval: int] [times: int]
+/player <name: string> follow
 /player <name: string> interact [repeat] [interval: int] [times: int]
 /player <name: string> jump [repeat] [interval: int] [times: int]
+/player <name: string> runcmd <command: string> [repeat] [interval: int] [times: int]
 /player <name: string> set <itemId: Item>
+/player <name: string> set <slot: int>
+/player <name: string> tp <vec3: x y z>
 /player <name: string> use <itemId: Item> [repeat] [interval: int] [times: int]
 /player <name: string> useon <itemId: Item> [blockPos: x y z] [repeat] [interval: int] [times: int]
 ```
@@ -127,7 +130,8 @@
 - `/player <name: string> <lookat|moveto|navto> [vec3: x y z]`让假人看向/直线/寻路走到某个位置
 - `/player <name: string> follow` 让假人跟随指针指向的实体(掉落物除外)，如果指针不指向任何实体，则假人会跟随自己
 - `/player <name: string> set <itemId: Item>`用于设定假人主手物品，假人会自动搜索背包并切换到主手，如果背包没有相关物品假人什么都不会做
-- `/player <name: string> backpack [slot: int]`打印假人背包内的所有物品(slot参数暂时没有实装)
+- `/player <name: string> backpack`打印假人背包内的所有物品(slot参数暂时没有实装)
+- `player <name: string> info` 打印假人的一些基本信息，用于调试
 
 下面所有指令都有`[repeat] [interval: int] [times: int]`这三个参数，该参数用于让假人重复当前动作，其中`interval`表示每次重复的间隔，单位是gt，不填表示1gt一次，`times`表示重复次数，不填表示一直重复永远不会停止，**我们称在做重复动作的假人处于工作状态**
 
@@ -150,11 +154,9 @@
 > 拥有显示村庄相关信息的能力
 
 ```
-/village <spawn|center|bound|poi|head> <onOroff: Boolean>
-/village [info]
-/village [info] <villageID: int>
+/village <info|dweller> [vid: string]
+/village <spawn|bound|center|poi|head> <onoroff: Boolean>
 /village list
-/village dweller
 ```
 
 - `village list`列出所有正在加载的村庄，改指令会显示如下格式的数据：
@@ -173,7 +175,7 @@
   - `center`表示村庄中心
   - `bounds`表示村庄范围
   - `poi`表示POI的查询范围(我自己也忘了这个范围是做啥的了)
-  - `head`表示在村民头顶显示信息，开启该选项后村民头顶会显示类似`[vid] 1 B M J 4514`这样的数据，其中中括号内的`vid`代表该村民所属的村庄的编号，后面的`1`表示该村民是该村庄的第几号村民，`B M J`分布表示该村民和床，钟，工作方块的绑定情况，绿色代表绑定，红色代表没绑定，最后的数据表示村民体内时钟的实时值。
+  - `head`表示在村民头顶显示信息，开启该选项后村民头顶会显示类似`[vid] 1 B M J 5678`这样的数据，其中中括号内的`vid`代表该村民所属的村庄的编号，后面的`1`表示该村民是该村庄的第几号村民，`B M J`分布表示该村民和床，钟，工作方块的绑定情况，绿色代表绑定，红色代表没绑定，最后的数据表示村民体内时钟的实时值。
 
 - `/village [info] <villageID: int>`打印`vid`为`villageID`的村庄的详细数据，id缺省时打印距离玩家最近的村庄，数据格式如下所示：
 
@@ -198,7 +200,7 @@
 /data block [blockPos: x y z] [nbt] [path: string]
 /data entity [nbt] [path: string]
 /data item [nbt] [path: string] 
-/data redstone <chunk|conn|signal> [blockPos: x y z]
+/data redstone <chunk|conn|info|signal> [blockPos: x y z]
 ```
 
 - `/data block [blockPos: x y z] ...`打印位于`blockPos`位置的方块ID,名字等信息,该值缺省时默认为玩家指针指向的方块
@@ -206,7 +208,8 @@
 - `/data item ... `打印手持物品的相关信息(暂未实装)
 - `/data redstone <chunk|conn|signal> [blockPos: x y z]`打印位于`blockPos`位置的红石相关信息
   - `signal` 打印位于`blockPos`处的红石原件的信号强度
-  - `chunk`标记`blockPos`所在区块的所有红石原件
+  - `info`打印位于`blockPos`处的红石元件的基本性质
+  - `chunk`标记`blockPos`所在区块的所有红石原件(调试用)
   - `conn` 标记`blockPos`所在位置的原件(绿色框)、为该原件的所有信号源(红色框)以及该原件提供能量的所有消费者或者电容器(黄色框)，如果你看不懂这个命令是什么意思那就不用管。
 
 `data`指令还提供了对nbt的支持,也就是`[nbt] [path: string]`这两个可选子命令：当指令后面加上nbt后插件会打印该方块/物品/实体的nbt数据。`path`提供了简单的nbt数据查询功能，该路由多个`key`或者索引构成，key之间用`.`隔开，下面是几个简单的例子：
@@ -254,11 +257,9 @@ data entitiy nbt "Pos.[1]"
 > 拥有在屏幕上实时显示文字信息的能力
 
 ```
-/hud <add|remove> <redstone|village|hoppercounter|mspt|base>
-/hud show <onoroff: Boolean>
+/hud <add|remove> <itemType: showItems>
 ```
 
-- `hud show`开启或者关闭hud(只针对指令执行者自己，不影响其他玩家)
 - `hud <add|remove>`添加或者移除你想在hud上现实的内容(只针对执指令执行者自己，不影响其他玩家)
   - `redstone` 显示红石相关信息，目前只有信号强度
   - `base`显示一些基本的信息，包括当前游戏刻度，玩家坐标，视角，指向的方块坐标，和亮度，当前所处位置的群系等等
@@ -274,9 +275,9 @@ data entitiy nbt "Pos.[1]"
 > 拥有在游戏内可视化结构生成区域(HSA)的能力
 
 ```
-/hsa clear
-/hsa place <blockName: Block>
-/hsa show <onOroff: Boolean>
+/hsa count
+/hsa place [aironly: Boolean]
+/hsa show <onoroff: Boolean>
 ```
 
 - `hsa show`开启或者关闭HSA显示，开启后插件会在游戏内有HSA的地方使用粒子画出结构的刷怪点，对于游戏内的四种刷怪点，插件有不同的颜色，具体如下所示：
@@ -284,8 +285,8 @@ data entitiy nbt "Pos.[1]"
   - 地狱堡垒 绿色
   - 海底神殿 黄色
   - 掠夺者前哨站 蓝色
-- `hsa place`在所有缓存的生成点放置指定方块(仅创造模式可用)，暂未没有实装
-- `hsa clear`清除hsa缓存
+- `hsa place`在所有缓存的生成点放置指定方块(仅创造模式可用)，`aironly`表示是否仅填充空气（默认为`false`）
+- `hsa count`打印附近的HSA的总数
 
 ### `log`
 
@@ -294,12 +295,14 @@ data entitiy nbt "Pos.[1]"
 ```
 /log <mspt|os>
 /log <levelseed|enchantseed>
+/log pt [blockPos: x y z]
 ```
 
 - `log mspt`打印最近`1s`的mspt和tps
 - `log os`打印服务器的CPU占用率和内存使用信息
 - `log levelseed`打印世界种子
 - `log enchantseed`打印当前玩家的附魔种子
+- `log pt`打印当前区块的计划刻的详细信息
 
 :::tip
 
@@ -318,6 +321,7 @@ data entitiy nbt "Pos.[1]"
 /tweak nocost <onoroff: Boolean>
 /tweak maxptsize <onoroff: Boolean>
 /tweak safeexplode <onoroff: Boolean>
+/tweak noclip <onoroff: Boolean>
 ```
 
 :::warning
@@ -340,6 +344,8 @@ data entitiy nbt "Pos.[1]"
 - `/tweak safeexplode` 开启后爆炸将不会破坏地形(包括TNT，魔影水晶和苦力怕的)
 
 - `/tweak maxptsize <onoroff: Boolean>`修改区块更新计划刻的100上限，默认值是100
+
+- ` /tweak noclip <onoroff: Boolean>`开启后服务器内所有玩家在创造模式下可以穿墙（类似观察者模式）
 
 :::tip
 

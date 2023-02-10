@@ -42,7 +42,7 @@ CheckNetIsolation.exe LoopbackExempt -a -p=S-1-15-2-1958404141-86561845-17529206
 ![](./img/pw.png)
 ## 3. 安装LiteLoaderBDS
 
-参考[LiteLoaderBDS中文安装教程](https://github.com/LiteLDev/LiteLoaderBDS#for-windows)安装服务器对应版本的Liteloader。**如遇到LiteloaderBDS相关的问题请前往[这里](https://github.com/LiteLDev/LiteLoaderBDS/issues)这里进行反馈。而不是找本插件开发者**。
+参考[LiteLoaderBDS中文安装教程](https://github.com/LiteLDev/LiteLoaderBDS#for-windows)安装服务器对应版本的LiteLoaderBDS。**如遇到LiteloaderBDS相关的问题请前往[这里](https://github.com/LiteLDev/LiteLoaderBDS/issues)这里进行反馈。而不是找本插件开发者**。
 
 ## 4. 下载并安装插件本体
 
@@ -57,16 +57,25 @@ CheckNetIsolation.exe LoopbackExempt -a -p=S-1-15-2-1958404141-86561845-17529206
          └───config.json
 ```
 
+在较新的版本中release内会内置`installer.exe`你可以在解压后直接双击该可执行程序，选中BDS根目录并点击安装即可。
+
 ## 5. 配置配置文件
 
 创造服一般可用不配置，生存服可能需要根据需求关闭部分功能(如`tick`，漏斗计数器等)。具体配置参考配置文件一节。
 
 
 ## 6. 加载材质包
-前往[https://github.com/OEOTYAN/Trapdoor-CUI/releases](https://github.com/OEOTYAN/Trapdoor-CUI/releases)下载纹理包，然后客户端加载该纹理包即可(**不是服务端，是每个玩家都要在本地加载，和普通材质包一样使用**)，加载好的游戏截图如下所示：
+下载纹理包，然后客户端加载该纹理包即可(**不是服务端，是每个玩家都要在本地加载，和普通材质包一样使用**)，加载好的游戏截图如下所示：
 
-![](./img/rsp.png)
+由于本插件的资源包系统修改过多次，因此不同的版本会有不同的资源表需求，具体见下表：
+
+| 版本        | 资源包下载                                                   |
+| ----------- | ------------------------------------------------------------ |
+| beta ~ 0.18 | [Trapdoor CUI v0.4](https://github.com/OEOTYAN/Trapdoor-CUI/releases/tag/v0.4) |
+| 0.19 ~ 0.26 | [Trapdoor CUI v5.0](https://github.com/OEOTYAN/Trapdoor-CUI/releases/tag/v5.0) + [LiteLoaderBDS CUI 1.0](https://github.com/OEOTYAN/LiteLoaderBDS-CUI/releases/tag/ll.1.0) |
+| 0.26 +      | [LiteLoaderBDS CUI 1.1](https://github.com/OEOTYAN/LiteLoaderBDS-CUI/releases/tag/v1.1) |
+
+
 ## 7. 连接服务器进入游戏
 
-如果你是本地开服,ip填`127.0.0.1`或者`localhost`，如果你用的是云服务器而不是本地，填公网ip即可(不知道的问你们服务器的服主)。端口按照自己的设置在服务器的配置文件里面改，默认`19132`。
-
+如果你是本地开服,IP填写`127.0.0.1`或者`localhost`，如果你用的是云服务器而不是本地，填公网IP即可(不知道的问你们服务器的服主)。端口按照自己的设置在服务器的配置文件里面改，默认`19132`。
