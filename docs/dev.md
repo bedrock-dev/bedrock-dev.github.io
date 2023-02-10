@@ -1,26 +1,29 @@
 # 开发和部署
-## 准备
 
-首先你需要下载`Microsoft Visual Studio 2019`或更新的版本，然后你需要下载安装`cmake`
+## 如何编译
+1. 下载`Microsoft Visual Studio 2019`或更新的版本，然后你需要下载并安装`cmake`
 
-## 创建新目录
+2. 创建并进入`build`目录,在项目根目录下运行:
 
-在项目主目录下运行:
-```shell
-md build
-```
-## 配置Cmake
-进入`build`目录后执行
-```shell
-cmake ..  -DCMAKE_BUILD_TYPE=Release -DDEV=OFF
-```
+   ```powershell
+   mkdir build && cd build
+   ```
 
-## 使用cmake进行编译
+3. 构建Cmake项目,在build下运行如下命令:
 
-在`build`目录内执行
-```shell
-cmake --build   . --config Release
-```
+   ```powershell
+   cmake ..  -DCMAKE_BUILD_TYPE=Release -DDEV=OFF
+   ```
+
+4. 编译项目
+
+   ```
+   cmake --build   . --config Release
+   ```
+
 等待项目编译，等编译完后在`Release`目录即可生成`trapdoor-{mod vesrion}-{game version}.dll`文件
 
-> 注意，只能用`Release`版本，`Debug`版会用不了
+### PR
+
+待定
+
