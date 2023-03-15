@@ -100,54 +100,65 @@
 > 拥有生成假人以及控制假人行为的能力
 
 ```
-/player
-/player <name: string> <drop|droptype> <itemId: Item>
-/player <name: string> <lookat|moveto|navto> <vec3: x y z>
-/player <name: string> <spawn|dropall|info|despawn|swap>
-/player <name: string> <stop|cancel>
-/player <name: string> attack [repeat] [interval: int] [times: int]
-/player <name: string> backpack
-/player <name: string> destroy [repeat] [interval: int] [times: int]
-/player <name: string> destroyon [blockPos: x y z] [repeat] [interval: int] [times: int]
-/player <name: string> follow
-/player <name: string> interact [repeat] [interval: int] [times: int]
-/player <name: string> jump [repeat] [interval: int] [times: int]
-/player <name: string> runcmd <command: string> [repeat] [interval: int] [times: int]
-/player <name: string> set <itemId: Item>
-/player <name: string> set <slot: int>
-/player <name: string> tp <vec3: x y z>
-/player <name: string> use <itemId: Item> [repeat] [interval: int] [times: int]
-/player <name: string> useon <itemId: Item> [blockPos: x y z] [repeat] [interval: int] [times: int]
+ /player
+ /player <name: string> <drop|droptype> <itemId: Item>
+ /player <name: string> <lookat|moveto|navto> <vec3: x y z>
+ /player <name: string> <spawn|dropall|info|despawn|swap>
+ /player <name: string> <stop|cancel>
+ /player <name: string> attack [repeat] [interval: int] [times: int]
+ /player <name: string> backpack
+ /player <name: string> destroy [repeat] [interval: int] [times: int]
+ /player <name: string> destroypos [blockPos: x y z] [repeat] [interval: int] [times: int]
+ /player <name: string> follow
+ /player <name: string> interact [repeat] [interval: int] [times: int]
+ /player <name: string> jump [repeat] [interval: int] [times: int]
+ /player <name: string> runcmd <command: string> [repeat] [interval: int] [times: int]
+ /player <name: string> script <file: string> [interval: int] [errorstop: Boolean]
+ /player <name: string> select <itemId: Item>
+ /player <name: string> select <slot: int>
+ /player <name: string> tp <vec3: x y z>
+ /player <name: string> use <itemId: Item> [repeat] [interval: int] [times: int]
+ /player <name: string> useon <itemId: Item> [repeat] [interval: int] [times: int]
+ /player <name: string> useonpos <itemId: Item> [blockPos: x y z] [repeat] [interval: int] [times: int]
 ```
+
+#### 基础
 
 本指令中所有的`name`都表示假人名字，并且是**必填参数**
 
-- `/player <name: string> <spawn|despawn>` 生成和踢出假人(请注意假人死亡后会自动被踢出)
-- `/player <name: string> <drop|droptype>` 假人丢出物品·
+- `/player <name: string> <spawn|despawn>` 生成和踢出假人(请注意假人死亡后会自动被踢出,且除了背包外的相关运行时数据不会保留)
+- `/player <name: string> <lookat|moveto|navto> [vec3: x y z]`让假人看向/直线/寻路走到某个位置
+- `/player <name: string> follow` 让假人跟随指针指向的实体(掉落物除外)，如果指针不指向任何实体，则假人会跟随执行命令的玩家
+- `/player <name: string> <drop|droptype>` 假人丢出物品
   - `drop`表示丢出该类型物品至多一组（背包内搜索到的第一个槽位全部丢出）
   - `draptype`表示丢出背包内的**全部该种物品**
   - `dropall`表示丢出背包内的所有物品
-- `/player <name: string> <lookat|moveto|navto> [vec3: x y z]`让假人看向/直线/寻路走到某个位置
-- `/player <name: string> follow` 让假人跟随指针指向的实体(掉落物除外)，如果指针不指向任何实体，则假人会跟随自己
 - `/player <name: string> set <itemId: Item>`用于设定假人主手物品，假人会自动搜索背包并切换到主手，如果背包没有相关物品假人什么都不会做
-- `/player <name: string> backpack`打印假人背包内的所有物品(slot参数暂时没有实装)
-- `player <name: string> info` 打印假人的一些基本信息，用于调试
+- `/player <name: string> backpack`打印假人背包内的所有物品以及数量
+- `/player <name: string> info` 打印假人的一些基本信息，用于调试
+- `/player <name: string> stop`用于停止假人当前动作，如挖掘一半的方块停止，吃一半的食物停止，射出正在蓄力的弓箭等
+-  `/player <name: string> tp <vec3: x y z>` 将假人传送到某个位置（暂未开放）
+- `player`列出服务器所有的假人的状态以及位置
+-  `/player <name: string> select <itemId: Item> ` 让假人从背包搜索物品并自动切换到主手
 
-下面所有指令都有`[repeat] [interval: int] [times: int]`这三个参数，该参数用于让假人重复当前动作，其中`interval`表示每次重复的间隔，单位是gt，不填表示1gt一次，`times`表示重复次数，不填表示一直重复永远不会停止，**我们称在做重复动作的假人处于工作状态**
+#### 应用
+
+下面所有指令都有`[repeat] [interval: int] [times: int]`这三个参数，该参数用于让假人重复当前动作，其中`interval`表示每次重复的间隔，单位是`gt`，不填表示1gt一次（由于假人内置行为CD，因此实际频率可能比设定周期更低，属正常现象），`times`表示重复次数，不填表示一直重复永远不会停止，**称在做重复动作的假人处于工作状态**
 
 - `/player <name: string> attack ...`让假人攻击玩家指针指向的实体，如果实体不存在玩家就会空挥武器
-- `/player <name: string> destroyon [blockPos: x y z] ...`让假人破坏位于`blockPos`的位置的方块，默认位置为玩家指针指向的方块
-- `/player <name: string> destroy ...`让假人破坏位其**视线所指**的的方块，默认位置为玩家指针指向的方块
-- `/player <name: string> interact ...`让假人右键位于玩家指针指向的方块或者实体
 - `/player <name: string> jump ...`让假人原地跳跃
-- `/player <name: string> use <itemId: Item> ...`让假人使用物品，相当于玩家的使用弓箭，三叉戟，吃东西，丢末影珍珠等动作（物品会在背包中自动搜索）
-- `/player <name: string> useon <itemId: Item> [blockPos: x y z] ...`让假人使用特定物品右键位于`blockPos`位置的方块，默认位置为玩家指针指向的方块
-
-此外`player`还提供了如下三个命令
-
-- `/player stop`用于停止假人当前动作，如挖掘一半的方块停止，吃一半的食物停止，射出正在蓄力的弓箭等
+- ` /player <name: string> runcmd <command: string> ...` 让假人执行命令 
+-  `/player <name: string> use <itemId: Item> ...` 让假人使用某个物品
+-  `/player <name: string> useon <itemId: Item> ...` 让假人使用某个物品右键**其视线所指向**的方块
+- ` /player <name: string> useonpos <itemId: Item> [blockPos: x y z] ...`让假人使用某个物品右键`blokcPos`位置的方块，`blokcPos`默认值是位置为玩家指针指向的方块
+- `/player <name: string> destroy ...`让假人破坏位其**视线所指向**的的方块，`blokcPos`默认值是玩家指针指向的方块
+- `/player <name: string> destroypos [blockPos: x y z] ...`让假人破坏位于`blockPos`的位置的方块，`blokcPos`默认值是玩家指针指向的方块
+- `/player <name: string> interact ...`让假人右键位于玩家指针指向的方块或者实体
 - `player cancel`取消假人的所有重复动作，也就是**解除假人的工作状态**
-- `player`列出服务器所有的假人的状态以及位置
+
+#### 高级
+
+在`0.3.5`或者更高的版本中假人内置了根据LUA脚本来行动的功能，玩家只需要编写`Init()`和`Tick()`函数即可让假人执行更加丰富的功能，比如挖区块，搭路，甚至根据蓝图建造建筑等等。可使用` /player <name: string> script <file: string> [interval: int] [errorstop: Boolean]`指令来让假人运行脚本，相关细节和教程参见假人脚本支持一节。
 
 ### `village`
 

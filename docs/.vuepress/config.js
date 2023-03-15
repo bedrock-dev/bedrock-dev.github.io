@@ -9,6 +9,7 @@ module.exports = {
         "/use",
         "/func",
         "/config",
+        "/scripts",
         "dev",
         "q&a"],
       },
