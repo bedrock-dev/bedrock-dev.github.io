@@ -1,7 +1,7 @@
 ---
 home: true
 actionText: 查看文档
-actionLink: /intro.html
+actionLink: /1.intro.html
 subActionText: Github
 subActionLink: https://github.com/bedrock-dev/trapdoor-ll
 features:
