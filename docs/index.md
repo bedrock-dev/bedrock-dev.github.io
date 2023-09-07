@@ -1,33 +1,24 @@
----
-home: true
-actionText: 查看文档
-actionLink: /1.intro.html
-subActionText: Github
-subActionLink: https://github.com/bedrock-dev/trapdoor-ll
-features:
-  - title: 尊重原版
-    details: 不会在未告知玩家的前提下修改原版特性，完全适用于生电服
-  - title: 功能强大
-    details: 村庄范围查看，世界加速，服务器性能分析
-  - title: 配置丰富
-    details: 所有指令和功能均可配置运行权限可关闭
-  - title: 稳定性强
-    details: 更新维护两年多，作者有丰富的开发经验
-  - title: 持续更新
-    details: 理论上不会咕咕咕
-  - title: 社区支持
-    details: 所有功能都经过社区验证和支持,会持续迭代
----
+# 1. 介绍
 
-::: slot heroText
-<b class="gradient">Trapdoor</b> BDS mod
+:::warning
+**注意，本wiki是为新版trapdoor(1.19+)准备的，不适用于旧版**
 :::
 
-::: slot tagline
-专注于原版生电服的基岩版BDS插件，完全开源免费
-:::
 
-::: slot footer
-Released under the AGPL License.<br>
-Copyright © 2023 hhhxiao
-:::
+## 这是什么
+
+Trapdoor 是一个服务于Minecraft 基岩版专用服务器(BDS)的插件mod，可以让你更清晰地了解到游戏是如何运行的。简单来说Trapdoor是专为MCBE生电服务的一个BDS mod。Trapdoor提供了诸如世界运行速度调整，村庄机制可视化，硬编码结构刷怪区域(HSA)可视化，假人，MSPT和TPS查看，漏斗计数器，实体数量分析，刷怪概率分析，等等功能，更多功能还在持续增加中。
+
+
+## 插件特色
+
+- 本插件完全**尊重原版(Vanilla)游戏机制，绝不会在玩家不知道的时候修改游戏机制，所有修改游戏机制的行为都会完全告知玩家**，具体细节请参考使用页面。
+- 支持多人游戏
+- 配置文件高度可自定义
+- 持续更新(咕咕咕)
+
+## 你可能会关心的的事情
+### 关于开发者
+目前主要的开发者有两位
+1. [hhhxiao](https://github.com/hhhxiao) Trapdoor的主要开发者
+1. [OEOTYAN](https://github.com/OEOTYAN) 主要负责部分算法的实现以及[插件所需要的配套纹理包](https://github.com/OEOTYAN/Trapdoor-CUI)的编写工作
