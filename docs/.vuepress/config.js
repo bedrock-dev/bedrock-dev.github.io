@@ -1,6 +1,6 @@
 
 module.exports = {
-  base: "/tr-wiki/",
+  base: "/",
   theme: "vt",
   themeConfig: {
         sidebar: [ 
