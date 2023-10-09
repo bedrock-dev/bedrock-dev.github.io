@@ -2,34 +2,63 @@ import { ThemeConfig } from "vuepress-theme-vt";
 import { defineConfig4CustomTheme } from "vuepress/config";
 
 export default defineConfig4CustomTheme<ThemeConfig>((ctx) => ({
-  theme: "vt",
+  // theme: "vt",
   title: "BedrockDev",
   themeConfig: {
+    nav:[
+      {
+        text:"Trapdoor",
+        link:"/tr/"
+      },
+      {
+        text:"BedrockMap",
+        link:"/bm/"
+      },
+      {
+        text: "文章",
+        link: "/docs/"
+      }
+    ],
     sidebar: {
-      "/tr/docs/":[
+      
+      "/tr/":[
+     
         {
          title: "基本介绍",
          collapsable: false,
           children:[
-            "/tr/docs/1.intro",
-            "/tr/docs/2.use",
-            "/tr/docs/3.func",
-            "/tr/docs/4.config",
+            "/tr/",
+            "/tr/use",
+            "/tr/func",
+            "/tr/config",
           ]
         },
         {
-    title: "高级功能",
+      title: "高级功能",
          collapsable: false,
           children:[
-            "/tr/docs/5.shortcuts",
-            "/tr/docs/6.scripts",
-            "/tr/docs/7.cache_data",
-            "/tr/docs/8.dev",
-            "/tr/docs/9.q&a",
-
+            "/tr/shortcuts",
+            "/tr/scripts",
+            "/tr/cache_data",
+            "/tr/dev",
+            "/tr/q&a",
           ]
-
-        }
+        },
+    {
+          title: "外部链接",
+          collapsable: false,
+          children: [
+            [
+              "https://github.com/bedrock-dev/trapdoor-ll",
+              "源码"
+            ],
+            [
+              "/tr/download",
+              "下载",
+            ],
+          ],
+        },
+        
       ],
 
     

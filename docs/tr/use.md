@@ -6,7 +6,6 @@
 
 :::tip
 免责声明
-
 trapdoor(以下简称tr)是一个利用dll远程注入技术开发的BDS辅助软（插）件，它提供了不少方便玩家的功能，给生电玩家创造了便利。此外，tr本身是开源免费的，内部没有任何恶意代码，原则上也不会对存档造成任何损害。
 
 但是考虑到此类软件的特殊性，开发者无法完全保证tr对用户的存档不造成任何破坏，万一发生意外情况，开发者不会也没有能力对tr对用户
@@ -38,7 +37,7 @@ CheckNetIsolation.exe LoopbackExempt -a -p=S-1-15-2-1958404141-86561845-17529206
 
 如果该步骤顺利的话`powershell`会输出"完成"二字，如下图所示：
 
-![](./img/pw.png)
+![](../img/pw.png)
 ## 3. 安装LiteLoaderBDS
 
 参考[LiteLoaderBDS中文安装教程](https://github.com/LiteLDev/LiteLoaderBDS#for-windows)安装服务器对应版本的LiteLoaderBDS。**如遇到LiteloaderBDS相关的问题请前往[这里](https://github.com/LiteLDev/LiteLoaderBDS/issues)这里进行反馈。而不是找本插件开发者**。
