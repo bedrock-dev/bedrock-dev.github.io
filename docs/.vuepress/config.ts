@@ -2,7 +2,7 @@ import { ThemeConfig } from "vuepress-theme-vt";
 import { defineConfig4CustomTheme } from "vuepress/config";
 
 export default defineConfig4CustomTheme<ThemeConfig>((ctx) => ({
-  // theme: "vt",
+   theme: "vt",
   title: "BedrockDev",
   themeConfig: {
     nav:[
@@ -24,7 +24,7 @@ export default defineConfig4CustomTheme<ThemeConfig>((ctx) => ({
       "/tr/":[
      
         {
-         title: "基本介绍",
+         title: "基本使用",
          collapsable: false,
           children:[
             "/tr/",

@@ -1,0 +1,1 @@
+### WIKI已经迁移到 [https://bedrock-dev.github.io/tr/](/tr/)
