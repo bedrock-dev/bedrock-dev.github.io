@@ -1,15 +1,57 @@
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-
-<p style="font-size: 32px;font-weight: bold">页面开发中...<br>This page is in developing.. </p>
-
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
+﻿---
+layout: bm-home
+title: BedrockMap — 基岩版地图编辑器
+description: 开源、高性能的 Minecraft 基岩版世界编辑器，支持地形、实体、生物群系、NBT 与 mcstructure。
+hero:
+  name: BedrockMap
+  tagline: Minecraft 基岩版世界编辑器
+  description: 基于 Qt6 与 C++17 开发的开源地图编辑器，直接读写 LevelDB 存档，用来浏览、检查与编辑基岩版世界的每一个区块。
+  note: 支持基岩版 1.2 ~ 1.21 存档 · 无需安装，解压即用
+  download: https://github.com/bedrock-dev/BedrockMap/releases/latest
+  screenshot: /imgs/bm-sample.png
+  ctaTitle: 现在就开始编辑你的世界
+  ctaText: 下载最新版本，打开存档文件夹即可看到整张地图。
+# 轮播图，追加条目即可；每项支持 src 和可选的 caption
+screenshots:
+  - src: /imgs/bm-sample.png
+    caption: 地图总览 —— 地形、群系与实体叠加显示
+features:
+  - title: 世界浏览
+    details: 打开并浏览主世界、下界、末地与自定义维度的全部区块数据。
+  - title: 地形可视化
+    details: 生物群系地图与地形叠加渲染，渲染滤镜可自由配置。
+  - title: 区块编辑器
+    details: 选中、查看与删除区块，并可视化区块内的实体、方块实体与计划刻。
+  - title: 区块复制粘贴
+    details: 框选区域后复制到其他存档，支持交互式放置与位置微调。
+  - title: NBT 编辑器
+    details: 查看与修改 NBT 数据，包括 level.dat、玩家背包、村庄、地图物品等其他数据。
+  - title: mcstructure 支持
+    details: 以 3D 体素预览浏览编辑 .mcstructure，也可把选区或区块导出为 mcstructure 或 GLB 模型，或者将 mcstructure 文件导入世界
+mouse:
+  - keys: 左键拖动
+    action: 平移地图
+  - keys: 右键点击
+    action: 打开上下文菜单
+  - keys: 中键拖动
+    action: 框选区域
+  - keys: 滚轮
+    action: 缩放
+shortcuts:
+  - keys: Ctrl+O
+    action: 打开世界
+  - keys: Ctrl+Shift+O
+    action: 打开文件（.mcstructure / .nbt / .nbts）
+  - keys: Ctrl+C / Ctrl+V
+    action: 复制 / 粘贴选中区域（可跨世界）
+  - keys: Ctrl+E / Ctrl+I
+    action: 导出 / 导入选区
+  - keys: Ctrl+D
+    action: 删除选中区块
+  - keys: Ctrl+H
+    action: 打开 3D 体素视图
+  - keys: Ctrl+G
+    action: 跳转到指定坐标
+  - keys: Alt+1 ~ Alt+4
+    action: 切换维度（主世界 / 下界 / 末地 / 自定义）
+---

@@ -14,11 +14,12 @@ trapdoor(以下简称tr)是一个利用dll远程注入技术开发的BDS辅助�
 如果你继续使用tr插件，那么就代表你同意了该声明(或者说叫用户协议)，如果你不想承担此类风险，请停止使用tr插件。
 
 附录： 以下是一些使用建议:
+
 - 及时更新插件到新版本，因为目前tr还是beta版，理论上越更新bug肯会越少
 - 尽量关闭不用的功能
 - 及时备份存档永远是好习惯
-2022.1.11
-:::
+  2022.1.11
+  :::
 
 ## 1. 下载BDS
 
@@ -38,15 +39,14 @@ CheckNetIsolation.exe LoopbackExempt -a -p=S-1-15-2-1958404141-86561845-17529206
 如果该步骤顺利的话`powershell`会输出"完成"二字，如下图所示：
 
 ![](../img/pw.png)
+
 ## 3. 安装LiteLoaderBDS
 
 参考[LiteLoaderBDS中文安装教程](https://github.com/LiteLDev/LiteLoaderBDS#for-windows)安装服务器对应版本的LiteLoaderBDS。**如遇到LiteloaderBDS相关的问题请前往[这里](https://github.com/LiteLDev/LiteLoaderBDS/issues)这里进行反馈。而不是找本插件开发者**。
 
 ## 4. 下载并安装插件本体
 
-
 #### 方法1
-
 
 1. 前往[Trapdoor的下载页面](https://github.com/hhhxiao/trapdoor-ll/releases)下载发布的release文件
 2. **解压下载到的压缩包，把所有文件复制到BDS的根目录即可**这时候相关配置文件的路径如下所示：
@@ -58,28 +58,26 @@ CheckNetIsolation.exe LoopbackExempt -a -p=S-1-15-2-1958404141-86561845-17529206
     └───trapdoor
          └───config.json
 ```
-#### 方法2
 
+#### 方法2
 
 在较新的版本中release内会内置`installer.exe`你可以在解压后直接双击该可执行程序，选中BDS根目录并点击安装即可。
 
-
 ## 5. 配置配置文件
 
-创造服一般可用不配置，生存服可能需要根据需求关闭部分功能(如`tick`，漏斗计数器等)。具体配置参考[配置文件](/4.config)一节。
-
+创造服一般可用不配置，生存服可能需要根据需求关闭部分功能(如`tick`，漏斗计数器等)。具体配置参考[配置文件](/tr/config)一节。
 
 ## 6. 加载材质包
+
 下载纹理包，然后客户端加载该纹理包即可(**不是服务端，是每个玩家都要在本地加载，和普通材质包一样使用**)，加载好的游戏截图如下所示：
 
 由于本插件的资源包系统修改过多次，因此不同的版本会有不同的资源表需求，具体见下表：
 
-| 版本        | 资源包下载                                                   |
-| ----------- | ------------------------------------------------------------ |
-| beta ~ 0.18 | [Trapdoor CUI v0.4](https://github.com/OEOTYAN/Trapdoor-CUI/releases/tag/v0.4) |
+| 版本        | 资源包下载                                                                                                                                                                 |
+| ----------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| beta ~ 0.18 | [Trapdoor CUI v0.4](https://github.com/OEOTYAN/Trapdoor-CUI/releases/tag/v0.4)                                                                                             |
 | 0.19 ~ 0.25 | [Trapdoor CUI v5.0](https://github.com/OEOTYAN/Trapdoor-CUI/releases/tag/v5.0) + [LiteLoaderBDS CUI 1.0](https://github.com/OEOTYAN/LiteLoaderBDS-CUI/releases/tag/ll.1.0) |
-| 0.26 +      | [LiteLoaderBDS CUI 1.1](https://github.com/OEOTYAN/LiteLoaderBDS-CUI/releases/tag/v1.1) |
-
+| 0.26 +      | [LiteLoaderBDS CUI 1.1](https://github.com/OEOTYAN/LiteLoaderBDS-CUI/releases/tag/v1.1)                                                                                    |
 
 ## 7. 连接服务器进入游戏
 

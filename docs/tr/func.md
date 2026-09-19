@@ -61,7 +61,6 @@
 
 `func`可以开启或者关闭部分功能的全局开关。在新版本中，TR将`func`和`tweak`合并，并重新分为两类：全局功能和个人功能。对于个人功能，需要使用`func`和`self`同时开启该功能才会对特定玩家生效；对于全局功能，只需要使用`func`指令开启，该功能则会全服务器的所有玩家生效。
 
-
 - `func autotool` 开启自动工具切换
 - `func fcopen` 开启强制开容
 - `func fcplace` 开启强放置
@@ -74,17 +73,17 @@
 
 下表列出了所有功能的详细释义：
 
-| 配置项          | 类型 | 释义                                                         |
-| --------------- | ---- | ------------------------------------------------------------ |
-| `autotool`      | 个人 | 开启后玩玩家挖掘方块时会自动将背包或者物品栏内最合适的工具切换到主手，该功能比较OP，请谨慎使用 |
-| `fcopen`        | 全局 | 开启后，容器的开启不再受到方块或者实体的阻挡，任何时候都能右键开启 |
+| 配置项          | 类型 | 释义                                                                                                         |
+| --------------- | ---- | ------------------------------------------------------------------------------------------------------------ |
+| `autotool`      | 个人 | 开启后玩玩家挖掘方块时会自动将背包或者物品栏内最合适的工具切换到主手，该功能比较OP，请谨慎使用               |
+| `fcopen`        | 全局 | 开启后，容器的开启不再受到方块或者实体的阻挡，任何时候都能右键开启                                           |
 | `fcplace`       | 全局 | 开启后，可以强制防止放置方块，共0，1，2三个级别，0就是原版，1表示无视实体阻挡放方块，2表示无视所有阻挡和检查 |
-| `maxptsize`     | 全局 | 修改每区块每gt100的计划刻上限                                |
-| `noclip`        | 个人 | 开启后玩家创造模式没有碰撞箱，可穿墙                         |
-| `safeexplode`   | 全局 | 开启后爆炸会影响实体但是不会破坏地形                         |
-| `blockrotate`   | 个人 | 开启后可以使用仙人掌右键方块并对其进行旋转                   |
-| `hoppercounter` | 全局 | 启用漏斗计数器功能，详见[counter](#counter)一节              |
-| `hud`           | 个人 | 启用HUD功能，详见[hud](#hud)一节                             |
+| `maxptsize`     | 全局 | 修改每区块每gt100的计划刻上限                                                                                |
+| `noclip`        | 个人 | 开启后玩家创造模式没有碰撞箱，可穿墙                                                                         |
+| `safeexplode`   | 全局 | 开启后爆炸会影响实体但是不会破坏地形                                                                         |
+| `blockrotate`   | 个人 | 开启后可以使用仙人掌右键方块并对其进行旋转                                                                   |
+| `hoppercounter` | 全局 | 启用漏斗计数器功能，详见[counter](#counter)一节                                                              |
+| `hud`           | 个人 | 启用HUD功能，详见[hud](#hud)一节                                                                             |
 
 ### `self`
 
@@ -103,7 +102,6 @@
 - `/self hud`开启或关闭HUD的个人开关
 - `/self noclip` 开启或关闭创造无碰撞的个人开关
 - `self dump` 打印玩家的所有个人配置
-
 
 ### `tick`
 
@@ -186,9 +184,9 @@
 - `/player <name: string> backpack`打印假人背包内的所有物品以及数量
 - `/player <name: string> info` 打印假人的一些基本信息，用于调试
 - `/player <name: string> stop`用于停止假人当前动作，如挖掘一半的方块停止，吃一半的食物停止，射出正在蓄力的弓箭等
--  `/player <name: string> tp <vec3: x y z>` 将假人传送到某个位置（暂未开放）
+- `/player <name: string> tp <vec3: x y z>` 将假人传送到某个位置（暂未开放）
 - `player`列出服务器所有的假人的状态以及位置
--  `/player <name: string> select <itemId: Item> ` 让假人从背包搜索物品并自动切换到主手
+- `/player <name: string> select <itemId: Item> ` 让假人从背包搜索物品并自动切换到主手
 
 #### 应用
 
@@ -196,9 +194,9 @@
 
 - `/player <name: string> attack ...`让假人攻击玩家指针指向的实体，如果实体不存在假人就会空挥武器
 - `/player <name: string> jump ...`让假人原地跳跃
-- ` /player <name: string> runcmd <command: string> ...` 让假人执行命令 
--  `/player <name: string> use <itemId: Item> ...` 让假人使用背包某个物品，如吃东西，使用末影珍珠等。物品会自动从背包中搜索并切到主手
--  `/player <name: string> useon <itemId: Item> ...` 让假人使用某个物品右键**其视线所指向**的方块，物品会自动从背包中搜索并切到主手
+- ` /player <name: string> runcmd <command: string> ...` 让假人执行命令
+- `/player <name: string> use <itemId: Item> ...` 让假人使用背包某个物品，如吃东西，使用末影珍珠等。物品会自动从背包中搜索并切到主手
+- `/player <name: string> useon <itemId: Item> ...` 让假人使用某个物品右键**其视线所指向**的方块，物品会自动从背包中搜索并切到主手
 - ` /player <name: string> useonpos <itemId: Item> [blockPos: x y z] ...`让假人使用某个物品右键`blokcPos`位置的方块，`blokcPos`默认值是位置为玩家指针指向的方块，物品会自动从背包中搜索并切到主手
 - `/player <name: string> destroy ...`让假人破坏位其**视线所指向**的的方块，`blokcPos`默认值是玩家指针指向的方块
 - `/player <name: string> destroypos [blockPos: x y z] ...`让假人破坏位于`blockPos`的位置的方块，`blokcPos`默认值是玩家指针指向的方块
@@ -207,7 +205,7 @@
 
 #### 高级
 
-在`0.3.5`或者更高的版本中假人内置了根据LUA脚本来行动的功能，玩家只需要编写`Init()`和`Tick()`函数即可让假人执行更加丰富的功能，比如挖区块，搭路，甚至根据蓝图建造建筑等等。可使用` /player <name: string> script <file: string> [interval: int] [errorstop: Boolean]`指令来让假人运行脚本，相关细节和教程参见[高级 - 假人脚本文档 & 教程](/6.scripts)一节。
+在`0.3.5`或者更高的版本中假人内置了根据LUA脚本来行动的功能，玩家只需要编写`Init()`和`Tick()`函数即可让假人执行更加丰富的功能，比如挖区块，搭路，甚至根据蓝图建造建筑等等。可使用` /player <name: string> script <file: string> [interval: int] [errorstop: Boolean]`指令来让假人运行脚本，相关细节和教程参见[高级 - 假人脚本文档 & 教程](/tr/scripts)一节。
 
 ### `village`
 
@@ -222,7 +220,7 @@
 - `village list`列出所有正在加载的村庄，改指令会显示如下格式的数据：
 
   ```
-  - [vid] [center] r:? p:? g:? b:[bounds]  
+  - [vid] [center] r:? p:? g:? b:[bounds]
   ```
 
   其中`vid`表示trapdoor**分配给该村庄的唯一id,除非服务器重启，否则村庄id永远不会重复(在一个服务器实例中，该id和村庄内的UUID唯一对应)**。`center`表示村庄中心坐标，`r`表示村庄半径，`p`表示村庄内的村民数量，`g`表示村庄内的铁傀儡数量，`b`表示村庄内的床的数量，`bounds`表示村庄的范围
@@ -230,7 +228,6 @@
 - `/village dweller` 打印指针指向的某个村民所绑定的POI坐标等信息
 
 - `/village <spawn|center|bound|poi|head> <onOroff: Boolean> `用于开关村庄相关的可视化：
-
   - `spawn`表示铁傀儡刷新范围
   - `center`表示村庄中心
   - `bounds`表示村庄范围
@@ -242,7 +239,7 @@
   ```
   VID: 1 UUID: 12345678-1234-1234-123456780123
   - Center
-  - Bounds 
+  - Bounds
   - Radius
   - Dwellers
   POIs:
@@ -259,7 +256,7 @@
 ```
 /data block [blockPos: x y z] [nbt] [path: string]
 /data entity [nbt] [path: string]
-/data item [nbt] [path: string] 
+/data item [nbt] [path: string]
 /data redstone <chunk|conn|info|signal> [blockPos: x y z]
 ```
 
@@ -283,7 +280,7 @@ data block ~ -1 ~ nbt "Items.[0].Name"
 2. 打印实体的y轴详细坐标
 
 ```
-data entitiy nbt "Pos.[1]" 
+data entitiy nbt "Pos.[1]"
 ```
 
 ### `spawn`
@@ -298,15 +295,15 @@ data entitiy nbt "Pos.[1]"
 ```
 
 - `/spawn analyze ...` 该命令提供了分析自然生物生成的功能
-  - `start` 开始实体生成统计，插件会统计**指令发出者所在维度**的所有自然生物生成情况以及**以指令发出者当前区块为中心的9*9区块**的生物的密度数据。注意：**玩家移动后该密度统计范围并不会改变**
+  - `start` 开始实体生成统计，插件会统计**指令发出者所在维度**的所有自然生物生成情况以及**以指令发出者当前区块为中心的9\*9区块**的生物的密度数据。注意：**玩家移动后该密度统计范围并不会改变**
   - `stop` 停止统计
-  - `print` 打印统计数据。插件会分别打印这次统计中洞穴和露天刷出的生物数量，刷出速度以及平均密度占用等信息 
+  - `print` 打印统计数据。插件会分别打印这次统计中洞穴和露天刷出的生物数量，刷出速度以及平均密度占用等信息
   - `clear`清除统计的数据
-- `/spawn count <all|chunk|density>` 分别打印指令发出者所在**维度,区块，以及以指令发出者为中心9*9区块**的每种实体的数量
+- `/spawn count <all|chunk|density>` 分别打印指令发出者所在**维度,区块，以及以指令发出者为中心9\*9区块**的每种实体的数量
 - `/spawn prob [blockPos: x y z]` 打印位置`blockPos`处可能生成的生物类型，概率，以及是否可能生成，位置缺省时为指针指向的位置
 - `/spawn forcesp <actorType: EntityType> [blockPos: x y z]` 在`blockPos`处进**强制进行一次生成尝试**，位置缺省时为指针指向的位置
 
-:::tip 
+:::tip
 
 如果你不懂`prob`和`forcesp`的用途那么无视这两条指令即可
 
@@ -400,7 +397,6 @@ data entitiy nbt "Pos.[1]"
 - `slime range`设置史莱姆显示范围
 - `slime clear`清除史莱姆区块的数据缓存
 
-
 ## Shortcut
 
-`Shortcut`提供了一些触发器，可以让服务器使用者通过修改配置文件来完成一些自定义功能，详见[高级 - Shortcuts](/5.shortcuts)一节。
+`Shortcut`提供了一些触发器，可以让服务器使用者通过修改配置文件来完成一些自定义功能，详见[高级 - Shortcuts](/tr/shortcuts)一节。
