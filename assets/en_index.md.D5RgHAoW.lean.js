@@ -1,0 +1,1 @@
+import{_ as r,o as a,c as t,a5 as o}from"./chunks/framework.BTidRIrv.js";const _=JSON.parse('{"title":"","description":"","frontmatter":{},"headers":[],"relativePath":"en/index.md","filePath":"en/index.md"}'),i={name:"en/index.md"};function h(n,e,l,s,b,d){return a(),t("div",null,[...e[0]||(e[0]=[o("",17)])])}const f=r(i,[["render",h]]);export{_ as __pageData,f as default};

@@ -1,0 +1,1 @@
+import{_ as s,o as e,c as i,a5 as t}from"./chunks/framework.BTidRIrv.js";const k=JSON.parse('{"title":"8. 开发和部署","description":"","frontmatter":{},"headers":[],"relativePath":"tr/dev.md","filePath":"tr/dev.md"}'),l={name:"tr/dev.md"};function p(d,a,n,o,h,r){return e(),i("div",null,[...a[0]||(a[0]=[t("",6)])])}const u=s(l,[["render",p]]);export{k as __pageData,u as default};

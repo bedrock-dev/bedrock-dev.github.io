@@ -1,0 +1,1 @@
+import{_ as e,o as t,c as r,a5 as o}from"./chunks/framework.BTidRIrv.js";const p=JSON.parse('{"title":"9. Q&A","description":"","frontmatter":{},"headers":[],"relativePath":"tr/q&a.md","filePath":"tr/q&a.md"}'),i={name:"tr/q&a.md"};function l(n,a,h,d,s,c){return t(),r("div",null,[...a[0]||(a[0]=[o("",11)])])}const m=e(i,[["render",l]]);export{p as __pageData,m as default};

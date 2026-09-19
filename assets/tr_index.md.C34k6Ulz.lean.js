@@ -1,0 +1,1 @@
+import{_ as r,o as e,c as t,a5 as o}from"./chunks/framework.BTidRIrv.js";const _=JSON.parse('{"title":"1. 介绍","description":"","frontmatter":{},"headers":[],"relativePath":"tr/index.md","filePath":"tr/index.md"}'),i={name:"tr/index.md"};function l(n,a,h,d,s,c){return e(),t("div",null,[...a[0]||(a[0]=[o("",10)])])}const u=r(i,[["render",l]]);export{_ as __pageData,u as default};
