@@ -17,6 +17,7 @@ const t = computed(() =>
         mouse: "Mouse",
         keyboard: "Keyboard",
         download: "Download latest",
+        web: "Web version (experimental)",
         source: "View source",
         feedback: "Report an issue",
         cta: "Download",
@@ -32,6 +33,7 @@ const t = computed(() =>
         mouse: "鼠标操作",
         keyboard: "键盘快捷键",
         download: "下载最新版",
+        web: "网页版（实验）",
         source: "查看源码",
         feedback: "反馈问题",
         cta: "下载",
@@ -79,10 +81,12 @@ onUnmounted(stop);
 const navLinks = computed(() =>
   isEn.value
     ? [
+        { text: t.value.web, href: "/bm/web/", external: true },
         { text: "Shortcuts", href: "#shortcuts" },
         { text: "Source", href: repo, external: true },
       ]
     : [
+        { text: t.value.web, href: "/bm/web/", external: true },
         { text: "快捷键", href: "#shortcuts" },
         { text: "源码", href: repo, external: true },
       ],
@@ -112,6 +116,13 @@ const navLinks = computed(() =>
         >
           {{ t.download }}
         </a>
+        <a
+          class="bm-btn bm-btn-ghost"
+          href="/bm/web/"
+          target="_blank"
+          rel="noopener noreferrer"
+          >{{ t.web }}</a
+        >
         <a
           class="bm-btn bm-btn-ghost"
           :href="repo"
