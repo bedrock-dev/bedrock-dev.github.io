@@ -1,5 +1,5 @@
 <script setup>
-import { computed, onMounted, onUnmounted, ref } from "vue";
+import { computed } from "vue";
 import { useData } from "vitepress";
 import BmNav from "./BmNav.vue";
 
@@ -10,37 +10,73 @@ const isEn = computed(() => localeIndex.value !== "root");
 const t = computed(() =>
   isEn.value
     ? {
-        features: "Features",
-        shortcuts: "Key shortcuts",
+        eyebrow: "Minecraft Bedrock / Cross-platform",
+        desktop: "Windows desktop",
+        desktopMeta: "Windows 10+",
+        mobile: "Android",
+        mobileMeta: "Android 9+",
+        featuresKicker: "Capabilities",
+        features: "Built for large worlds and parallel work",
+        shortcutsKicker: "Controls",
+        shortcuts: "Map and chunk controls",
         shortcutsSub:
-          "Once a world is open, drag the world folder or a save file onto the window to begin.",
+          "Pointer, touch and keyboard controls for navigating the map, selecting chunks, opening files and editing worlds.",
         mouse: "Mouse",
         keyboard: "Keyboard",
         download: "Download latest",
-        web: "Web version (experimental)",
+        web: "Web version",
         source: "View source",
         feedback: "Report an issue",
         cta: "Download",
         lang: "中文",
         langHref: "/bm/",
         home: "/en/bm/",
-        badge: "Open source · AGPL-3.0 · Windows 10",
+        aboutKicker: "About",
+        aboutLead: "BedrockMap is maintained by ",
+        aboutMaintainer: "BedrockDev and BedrockMap contributors",
+        aboutMiddle: ". The source is available on ",
+        aboutSource: "GitHub",
+        aboutLicenseLead:
+          ", and the project is released as free and open source under ",
+        aboutLicense: "AGPL-3.0",
+        aboutTail: ".",
+        disclaimerLabel: "Unofficial project",
+        disclaimer:
+          "BedrockMap is an independent third-party project. It is not affiliated with, authorized, sponsored, or endorsed by Mojang Studios, Microsoft, or the official Minecraft team. Minecraft and related names, trademarks, and assets belong to their respective owners.",
       }
     : {
-        features: "核心功能",
-        shortcuts: "主要快捷键",
-        shortcutsSub: "打开世界后，把世界文件夹或存档文件拖进窗口即可开始。",
-        mouse: "鼠标操作",
-        keyboard: "键盘快捷键",
+        eyebrow: "Minecraft Bedrock / 跨平台",
+        desktop: "Windows 桌面端",
+        desktopMeta: "Windows 10+",
+        mobile: "Android 移动端",
+        mobileMeta: "Android 9+",
+        featuresKicker: "核心能力",
+        features: "为大型世界和多任务工作流构建",
+        shortcutsKicker: "操作",
+        shortcuts: "地图和区块操作",
+        shortcutsSub:
+          "浏览地图、选择区块、打开文件和执行编辑时常用的鼠标、触控与键盘操作。",
+        mouse: "鼠标",
+        keyboard: "键盘",
         download: "下载最新版",
-        web: "网页版（实验）",
+        web: "网页版",
         source: "查看源码",
         feedback: "反馈问题",
         cta: "下载",
         lang: "English",
         langHref: "/en/bm/",
         home: "/bm/",
-        badge: "开源 · AGPL-3.0 · Windows 10",
+        aboutKicker: "关于",
+        aboutLead: "BedrockMap 由 ",
+        aboutMaintainer: "BedrockDev 与 BedrockMap 贡献者",
+        aboutMiddle: "维护。源代码托管在 ",
+        aboutSource: "GitHub",
+        aboutLicenseLead: "，并基于 ",
+        aboutLicense: "AGPL-3.0",
+        aboutTail: " 许可证开源免费发布。",
+        disclaimerLabel: "非官方声明",
+        disclaimer:
+          "BedrockMap 是独立的第三方项目，与 Mojang Studios、Microsoft 或 Minecraft 官方团队没有任何隶属、授权、赞助、合作或认可关系。Minecraft 及相关名称、商标和素材归其各自所有者所有。",
       },
 );
 
@@ -50,44 +86,37 @@ const mouse = computed(() => frontmatter.value.mouse ?? []);
 const shortcuts = computed(() => frontmatter.value.shortcuts ?? []);
 const releases = "https://github.com/bedrock-dev/BedrockMap/releases";
 const repo = "https://github.com/bedrock-dev/BedrockMap";
+const organization = "https://github.com/bedrock-dev";
+const license = `${repo}/blob/main/LICENSE`;
 
-const slides = computed(() => {
+const platformShots = computed(() => {
   const list = frontmatter.value.screenshots;
-  if (Array.isArray(list) && list.length) return list;
-  return hero.value.screenshot ? [{ src: hero.value.screenshot }] : [];
+  return {
+    desktop:
+      (Array.isArray(list) && list[0]) ||
+      (hero.value.screenshot ? { src: hero.value.screenshot } : null),
+    mobile:
+      (Array.isArray(list) && list[1]) ||
+      (hero.value.mobileScreenshot
+        ? { src: hero.value.mobileScreenshot }
+        : null),
+  };
 });
-
-const active = ref(0);
-const interval = 6000;
-let timer;
-
-const go = (i) => {
-  active.value = (i + slides.value.length) % slides.value.length;
-};
-
-const start = () => {
-  if (slides.value.length > 1 && !timer)
-    timer = setInterval(() => go(active.value + 1), interval);
-};
-
-const stop = () => {
-  clearInterval(timer);
-  timer = undefined;
-};
-
-onMounted(start);
-onUnmounted(stop);
 
 const navLinks = computed(() =>
   isEn.value
     ? [
-        { text: t.value.web, href: "/bm/web/", external: true },
+        { text: "Platforms", href: "#platforms" },
+        { text: "Capabilities", href: "#features" },
         { text: "Shortcuts", href: "#shortcuts" },
+        { text: "About", href: "#about" },
         { text: "Source", href: repo, external: true },
       ]
     : [
-        { text: t.value.web, href: "/bm/web/", external: true },
+        { text: "平台", href: "#platforms" },
+        { text: "功能", href: "#features" },
         { text: "快捷键", href: "#shortcuts" },
+        { text: "关于", href: "#about" },
         { text: "源码", href: repo, external: true },
       ],
 );
@@ -102,147 +131,163 @@ const navLinks = computed(() =>
       :home="t.home"
     />
 
-    <section class="bm-hero">
-      <p class="bm-badge">{{ t.badge }}</p>
-      <h1>{{ hero.name ?? "BedrockMap" }}</h1>
-      <p class="bm-tagline">{{ hero.tagline }}</p>
-      <p class="bm-desc">{{ hero.description }}</p>
-      <div class="bm-actions">
-        <a
-          class="bm-btn bm-btn-primary"
-          :href="hero.download ?? `${releases}/latest`"
-          target="_blank"
-          rel="noreferrer"
-        >
-          {{ t.download }}
-        </a>
-        <a
-          class="bm-btn bm-btn-ghost"
-          href="/bm/web/"
-          target="_blank"
-          rel="noopener noreferrer"
-          >{{ t.web }}</a
-        >
-        <a
-          class="bm-btn bm-btn-ghost"
-          :href="repo"
-          target="_blank"
-          rel="noreferrer"
-          >{{ t.source }}</a
-        >
-      </div>
-      <p class="bm-note">{{ hero.note }}</p>
-    </section>
+    <main>
+      <section class="bm-hero">
+        <div class="bm-hero-copy">
+          <p class="bm-kicker">{{ t.eyebrow }}</p>
+          <h1>{{ hero.name ?? "BedrockMap" }}</h1>
+          <p class="bm-tagline">{{ hero.tagline }}</p>
+          <p class="bm-desc">{{ hero.description }}</p>
 
-    <section v-if="slides.length" class="bm-shot">
-      <div class="bm-carousel" @mouseenter="stop" @mouseleave="start">
+          <div class="bm-actions">
+            <a
+              class="bm-btn bm-btn-primary"
+              :href="hero.download ?? `${releases}/latest`"
+              target="_blank"
+              rel="noreferrer"
+            >
+              {{ t.download }} <span aria-hidden="true">↗</span>
+            </a>
+            <a
+              class="bm-btn bm-btn-ghost"
+              href="/bm/web/"
+              target="_blank"
+              rel="noopener noreferrer"
+              >{{ t.web }}</a
+            >
+            <a
+              class="bm-text-link"
+              :href="repo"
+              target="_blank"
+              rel="noreferrer"
+              >{{ t.source }} <span aria-hidden="true">↗</span></a
+            >
+          </div>
+        </div>
+
         <div
-          class="bm-track"
-          :style="{ transform: `translateX(-${active * 100}%)` }"
+          v-if="platformShots.desktop"
+          id="platforms"
+          class="bm-platform-showcase"
         >
-          <figure v-for="(s, i) in slides" :key="s.src">
+          <figure class="bm-desktop-shot">
+            <figcaption>
+              <strong>{{ t.desktop }}</strong>
+              <span>{{ t.desktopMeta }}</span>
+            </figcaption>
             <img
-              :src="s.src"
-              :alt="s.caption ?? `${hero.name ?? 'BedrockMap'} ${i + 1}`"
+              :src="platformShots.desktop.src"
+              :alt="platformShots.desktop.caption ?? t.desktop"
             />
-            <figcaption v-if="s.caption">{{ s.caption }}</figcaption>
+          </figure>
+
+          <figure v-if="platformShots.mobile" class="bm-mobile-shot">
+            <figcaption>
+              <strong>{{ t.mobile }}</strong>
+              <span>{{ t.mobileMeta }}</span>
+            </figcaption>
+            <img
+              :src="platformShots.mobile.src"
+              :alt="platformShots.mobile.caption ?? t.mobile"
+            />
           </figure>
         </div>
+      </section>
 
-        <template v-if="slides.length > 1">
-          <button
-            class="bm-arrow bm-prev"
-            :aria-label="isEn ? 'Previous slide' : '上一张'"
-            @click="go(active - 1)"
-          >
-            <span>‹</span>
-          </button>
-          <button
-            class="bm-arrow bm-next"
-            :aria-label="isEn ? 'Next slide' : '下一张'"
-            @click="go(active + 1)"
-          >
-            <span>›</span>
-          </button>
-          <div class="bm-dots">
-            <button
-              v-for="(s, i) in slides"
-              :key="i"
-              :class="{ active: i === active }"
-              :aria-label="isEn ? `Slide ${i + 1}` : `第 ${i + 1} 张`"
-              @click="go(i)"
-            />
+      <section id="features" class="bm-section bm-features">
+        <header class="bm-section-head">
+          <p class="bm-kicker">{{ t.featuresKicker }}</p>
+          <h2>{{ t.features }}</h2>
+        </header>
+        <div class="bm-feature-list">
+          <article v-for="f in features" :key="f.title" class="bm-feature">
+            <h3>{{ f.title }}</h3>
+            <p>{{ f.details }}</p>
+          </article>
+        </div>
+      </section>
+
+      <section id="shortcuts" class="bm-section bm-shortcuts">
+        <header class="bm-section-head">
+          <p class="bm-kicker">{{ t.shortcutsKicker }}</p>
+          <h2>{{ t.shortcuts }}</h2>
+          <p class="bm-sub">{{ t.shortcutsSub }}</p>
+        </header>
+
+        <div class="bm-input-panel">
+          <div class="bm-input-grid">
+            <section class="bm-input-group">
+              <h3>{{ t.mouse }}</h3>
+              <dl>
+                <div v-for="m in mouse" :key="m.keys">
+                  <dt>{{ m.keys }}</dt>
+                  <dd>{{ m.action }}</dd>
+                </div>
+              </dl>
+            </section>
+            <section class="bm-input-group">
+              <h3>{{ t.keyboard }}</h3>
+              <dl>
+                <div v-for="s in shortcuts" :key="s.keys">
+                  <dt>{{ s.keys }}</dt>
+                  <dd>{{ s.action }}</dd>
+                </div>
+              </dl>
+            </section>
           </div>
-        </template>
-      </div>
-    </section>
-
-    <section class="bm-features">
-      <h2>{{ t.features }}</h2>
-      <ul>
-        <li v-for="f in features" :key="f.title">
-          <h3>{{ f.title }}</h3>
-          <p>{{ f.details }}</p>
-        </li>
-      </ul>
-    </section>
-
-    <section id="shortcuts" class="bm-shortcuts">
-      <h2>{{ t.shortcuts }}</h2>
-      <p class="bm-sub">{{ t.shortcutsSub }}</p>
-      <div class="bm-tables">
-        <div class="bm-table">
-          <h3>{{ t.mouse }}</h3>
-          <table>
-            <tbody>
-              <tr v-for="m in mouse" :key="m.keys">
-                <th>{{ m.keys }}</th>
-                <td>{{ m.action }}</td>
-              </tr>
-            </tbody>
-          </table>
         </div>
-        <div class="bm-table">
-          <h3>{{ t.keyboard }}</h3>
-          <table>
-            <tbody>
-              <tr v-for="s in shortcuts" :key="s.keys">
-                <th>{{ s.keys }}</th>
-                <td>{{ s.action }}</td>
-              </tr>
-            </tbody>
-          </table>
-        </div>
-      </div>
-    </section>
+      </section>
 
-    <section class="bm-cta">
-      <h2>{{ hero.ctaTitle }}</h2>
-      <p>{{ hero.ctaText }}</p>
-      <div class="bm-actions">
-        <a
-          class="bm-btn bm-btn-primary"
-          :href="hero.download ?? `${releases}/latest`"
-          target="_blank"
-          rel="noreferrer"
-        >
-          {{ t.download }}
-        </a>
-        <a
-          class="bm-btn bm-btn-ghost"
-          :href="`${repo}/issues`"
-          target="_blank"
-          rel="noreferrer"
-          >{{ t.feedback }}</a
-        >
-      </div>
-    </section>
+      <section id="about" class="bm-about">
+        <p class="bm-kicker">{{ t.aboutKicker }}</p>
+        <p class="bm-about-text">
+          {{ t.aboutLead }}
+          <a :href="organization" target="_blank" rel="noreferrer">{{
+            t.aboutMaintainer
+          }}</a>{{ t.aboutMiddle }}
+          <a :href="repo" target="_blank" rel="noreferrer">{{
+            t.aboutSource
+          }}</a>{{ t.aboutLicenseLead }}
+          <a :href="license" target="_blank" rel="noreferrer">{{
+            t.aboutLicense
+          }}</a>{{ t.aboutTail }}
+        </p>
+      </section>
+
+      <aside class="bm-disclaimer">
+        <strong>{{ t.disclaimerLabel }}</strong>
+        <p>{{ t.disclaimer }}</p>
+      </aside>
+
+      <section class="bm-download" :aria-label="isEn ? 'Download' : '下载'">
+        <div class="bm-actions">
+          <a
+            class="bm-btn bm-btn-primary"
+            :href="hero.download ?? `${releases}/latest`"
+            target="_blank"
+            rel="noreferrer"
+          >
+            {{ t.download }} <span aria-hidden="true">↗</span>
+          </a>
+          <a
+            class="bm-btn bm-btn-ghost"
+            :href="`${repo}/issues`"
+            target="_blank"
+            rel="noreferrer"
+            >{{ t.feedback }}</a
+          >
+        </div>
+      </section>
+    </main>
 
     <footer class="bm-footer">
-      <span>BedrockDev · BedrockMap</span>
+      <div class="bm-footer-brand">
+        <img src="/imgs/bm-logo.svg" alt="" width="28" height="28" />
+        <span>BedrockDev / BedrockMap</span>
+      </div>
       <nav>
         <a :href="repo" target="_blank" rel="noreferrer">GitHub</a>
-        <a :href="`${releases}`" target="_blank" rel="noreferrer">Releases</a>
+        <a :href="releases" target="_blank" rel="noreferrer">Releases</a>
         <a :href="`${repo}/issues`" target="_blank" rel="noreferrer">Issues</a>
         <a :href="isEn ? '/en/' : '/'">{{
           isEn ? "BedrockDev home" : "BedrockDev 主页"
@@ -253,405 +298,455 @@ const navLinks = computed(() =>
 </template>
 
 <style scoped>
-.bm {
-  --bm-max: 1120px;
-  min-height: 100vh;
-  background: var(--vp-c-bg);
-}
-
-/* Hero */
 .bm-hero {
-  position: relative;
+  display: grid;
+  grid-template-columns: minmax(0, 0.82fr) minmax(500px, 1.18fr);
+  gap: clamp(42px, 6vw, 88px);
+  align-items: center;
   max-width: var(--bm-max);
+  min-height: 610px;
   margin: 0 auto;
-  padding: 84px 24px 64px;
-  text-align: center;
+  padding: 74px 24px 72px;
 }
-.bm-hero::before {
-  content: "";
-  position: absolute;
-  inset: -120px 0 auto;
-  height: 460px;
-  pointer-events: none;
-  background: radial-gradient(
-    60% 100% at 50% 0%,
-    color-mix(in srgb, var(--vp-c-brand-1) 22%, transparent),
-    transparent 70%
-  );
+
+.bm-hero-copy {
+  padding-bottom: 4px;
 }
-.bm-badge {
-  position: relative;
-  display: inline-block;
-  margin: 0 0 22px;
-  padding: 5px 13px;
-  border: 1px solid var(--vp-c-divider);
-  border-radius: 999px;
-  font-size: 12.5px;
-  letter-spacing: 0.04em;
-  color: var(--vp-c-text-2);
-  background: var(--vp-c-bg-soft);
-}
+
 .bm-hero h1 {
-  position: relative;
-  margin: 0;
-  font-size: clamp(40px, 7vw, 68px);
-  line-height: 1.05;
-  font-weight: 800;
-  letter-spacing: -0.035em;
-  background: linear-gradient(
-    120deg,
-    var(--vp-c-text-1) 30%,
-    var(--vp-c-brand-1)
-  );
-  -webkit-background-clip: text;
-  background-clip: text;
-  color: transparent;
-}
-.bm-tagline {
-  position: relative;
-  margin: 18px 0 0;
-  font-size: clamp(17px, 2.4vw, 21px);
-  font-weight: 600;
+  max-width: 520px;
+  margin: 20px 0 0;
+  font-size: clamp(52px, 7vw, 86px);
+  line-height: 0.98;
+  font-weight: 700;
+  letter-spacing: -0.055em;
   color: var(--vp-c-text-1);
 }
+
+.bm-tagline {
+  max-width: 470px;
+  margin: 26px 0 0;
+  font-size: clamp(20px, 2.4vw, 28px);
+  line-height: 1.35;
+  font-weight: 560;
+  letter-spacing: -0.025em;
+  color: var(--vp-c-text-1);
+}
+
 .bm-desc {
-  position: relative;
-  max-width: 620px;
-  margin: 14px auto 0;
-  font-size: 15.5px;
-  line-height: 1.75;
+  max-width: 520px;
+  margin: 18px 0 0;
+  font-size: 15px;
+  line-height: 1.8;
   color: var(--vp-c-text-2);
 }
 
-/* 按钮 */
-.bm-actions {
-  position: relative;
+.bm-hero .bm-actions {
+  margin-top: 30px;
+}
+
+.bm-platform-showcase {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) clamp(112px, 20%, 145px);
+  gap: clamp(14px, 2.4vw, 24px);
+  align-items: end;
+  min-width: 0;
+  scroll-margin-top: 86px;
+}
+
+.bm-desktop-shot,
+.bm-mobile-shot {
+  min-width: 0;
+  margin: 0;
+}
+
+.bm-platform-showcase figcaption {
   display: flex;
-  flex-wrap: wrap;
+  align-items: baseline;
+  justify-content: space-between;
   gap: 12px;
-  justify-content: center;
-  margin-top: 34px;
+  margin-bottom: 9px;
 }
-.bm-btn {
-  padding: 12px 26px;
-  border-radius: 10px;
-  font-size: 15px;
-  font-weight: 600;
-  text-decoration: none;
-  transition:
-    transform 0.15s,
-    box-shadow 0.2s,
-    background 0.2s;
-}
-.bm-btn:hover {
-  transform: translateY(-1px);
-}
-.bm-btn-primary {
-  color: var(--vp-c-white);
-  background: var(--vp-c-brand-1);
-  box-shadow: 0 6px 22px -8px var(--vp-c-brand-1);
-}
-.bm-btn-primary:hover {
-  background: var(--vp-c-brand-2);
-}
-.bm-btn-ghost {
-  color: var(--vp-c-text-1);
-  border: 1px solid var(--vp-c-divider);
-  background: var(--vp-c-bg-soft);
-}
-.bm-btn-ghost:hover {
-  border-color: var(--vp-c-brand-1);
-  color: var(--vp-c-brand-1);
-}
-.bm-note {
-  position: relative;
-  margin: 18px 0 0;
+
+.bm-platform-showcase figcaption strong {
   font-size: 13px;
+  font-weight: 600;
+  color: var(--vp-c-text-1);
+}
+
+.bm-platform-showcase figcaption span {
+  font-size: 11px;
   color: var(--vp-c-text-3);
 }
 
-/* 截图轮播 */
-.bm-shot {
-  max-width: var(--bm-max);
-  margin: 8px auto 0;
-  padding: 0 24px;
-}
-.bm-carousel {
-  position: relative;
-  overflow: hidden;
-  border-radius: 14px;
-  border: 1px solid var(--vp-c-divider);
-  box-shadow: 0 30px 70px -30px rgba(0, 0, 0, 0.45);
-}
-.bm-track {
-  display: flex;
-  transition: transform 0.5s cubic-bezier(0.4, 0, 0.2, 1);
-}
-.bm-track figure {
-  flex: 0 0 100%;
-  margin: 0;
-}
-.bm-track img {
+.bm-platform-showcase img {
   display: block;
   width: 100%;
-}
-.bm-track figcaption {
-  padding: 12px 20px;
-  font-size: 13.5px;
-  color: var(--vp-c-text-2);
-  background: var(--vp-c-bg-soft);
-  border-top: 1px solid var(--vp-c-divider);
-}
-.bm-arrow {
-  position: absolute;
-  top: 50%;
-  translate: 0 -50%;
-  display: grid;
-  place-items: center;
-  width: 40px;
-  height: 40px;
-  border: 1px solid var(--vp-c-divider);
-  border-radius: 50%;
-  font-size: 22px;
-  line-height: 1;
-  color: var(--vp-c-text-1);
-  background: color-mix(in srgb, var(--vp-c-bg) 80%, transparent);
-  backdrop-filter: blur(8px);
-  cursor: pointer;
-  opacity: 0;
-  transition:
-    opacity 0.25s,
-    background 0.2s,
-    color 0.2s;
-}
-.bm-carousel:hover .bm-arrow,
-.bm-arrow:focus-visible {
-  opacity: 1;
-}
-.bm-arrow:hover {
-  color: var(--vp-c-white);
-  background: var(--vp-c-brand-1);
-  border-color: var(--vp-c-brand-1);
-}
-.bm-arrow span {
-  margin-top: -2px;
-}
-.bm-prev {
-  left: 14px;
-}
-.bm-next {
-  right: 14px;
-}
-.bm-dots {
-  position: absolute;
-  bottom: 14px;
-  left: 50%;
-  translate: -50% 0;
-  display: flex;
-  gap: 8px;
-  padding: 7px 12px;
-  border-radius: 999px;
-  background: color-mix(in srgb, var(--vp-c-bg) 70%, transparent);
-  backdrop-filter: blur(8px);
-}
-.bm-dots button {
-  width: 8px;
-  height: 8px;
-  padding: 0;
-  border: 0;
-  border-radius: 50%;
-  background: var(--vp-c-text-3);
-  opacity: 0.5;
-  cursor: pointer;
-  transition:
-    opacity 0.2s,
-    width 0.25s,
-    background 0.2s;
-}
-.bm-dots button.active {
-  width: 20px;
-  border-radius: 4px;
-  opacity: 1;
-  background: var(--vp-c-brand-1);
+  height: auto;
+  border: 1px solid var(--bm-line);
 }
 
-/* 特性 */
-.bm-features {
+.bm-section {
   max-width: var(--bm-max);
   margin: 0 auto;
-  padding: 88px 24px 40px;
+  padding: 112px 24px;
 }
-.bm-features h2,
-.bm-cta h2 {
-  margin: 0 0 8px;
-  font-size: 27px;
-  font-weight: 700;
-  letter-spacing: -0.02em;
-  text-align: center;
-  color: var(--vp-c-text-1);
-}
-.bm-features ul {
+
+.bm-section-head {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(264px, 1fr));
-  gap: 18px;
-  margin: 34px 0 0;
-  padding: 0;
-  list-style: none;
+  grid-template-columns: minmax(150px, 0.36fr) minmax(0, 0.64fr);
+  column-gap: 48px;
+  align-items: start;
+  margin-bottom: 44px;
 }
-.bm-features li {
-  position: relative;
-  padding: 22px 22px 24px;
-  border: 1px solid var(--vp-c-divider);
-  border-radius: 12px;
-  background: var(--vp-c-bg-soft);
-  transition:
-    border-color 0.2s,
-    transform 0.2s;
+
+.bm-section-head .bm-kicker {
+  padding-top: 7px;
 }
-.bm-features li:hover {
-  border-color: color-mix(
-    in srgb,
-    var(--vp-c-brand-1) 55%,
-    var(--vp-c-divider)
-  );
-  transform: translateY(-2px);
-}
-.bm-features li::before {
-  content: "";
-  position: absolute;
-  top: 0;
-  left: 22px;
-  width: 30px;
-  height: 3px;
-  border-radius: 0 0 3px 3px;
-  background: var(--vp-c-brand-1);
-}
-.bm-features h3 {
-  margin: 0 0 8px;
-  font-size: 16px;
-  font-weight: 650;
+
+.bm-section-head h2 {
+  max-width: 720px;
+  margin: 0;
+  font-size: clamp(30px, 4.2vw, 50px);
+  line-height: 1.08;
+  font-weight: 680;
+  letter-spacing: -0.045em;
   color: var(--vp-c-text-1);
 }
-.bm-features p {
+
+.bm-feature-list {
+  margin-left: calc(36% + 48px);
+  border-top: 1px solid var(--bm-line);
+}
+
+.bm-feature {
+  display: grid;
+  grid-template-columns: minmax(150px, 0.38fr) minmax(0, 0.62fr);
+  gap: 20px;
+  align-items: start;
+  padding: 24px 0 25px;
+  border-bottom: 1px solid var(--bm-line);
+}
+
+.bm-feature h3 {
+  margin: 0;
+  font-size: 17px;
+  line-height: 1.45;
+  font-weight: 620;
+  color: var(--vp-c-text-1);
+}
+
+.bm-feature p {
   margin: 0;
   font-size: 14px;
-  line-height: 1.7;
+  line-height: 1.72;
   color: var(--vp-c-text-2);
 }
 
-/* 快捷键 */
-.bm-shortcuts {
-  max-width: var(--bm-max);
-  margin: 0 auto;
-  padding: 24px 24px 24px;
+.bm-shortcuts .bm-section-head {
+  grid-template-columns: minmax(150px, 0.36fr) minmax(0, 0.64fr);
+  margin-bottom: 34px;
 }
-.bm-shortcuts h2 {
-  margin: 0 0 8px;
-  font-size: 27px;
-  font-weight: 700;
-  letter-spacing: -0.02em;
-  text-align: center;
-  color: var(--vp-c-text-1);
-}
-.bm-sub {
-  margin: 10px auto 34px;
-  max-width: 560px;
-  text-align: center;
-  font-size: 15px;
+
+.bm-shortcuts .bm-sub {
+  grid-column: 2;
+  max-width: 640px;
+  margin: 18px 0 0;
+  font-size: 14.5px;
   line-height: 1.75;
   color: var(--vp-c-text-2);
 }
-.bm-tables {
+
+.bm-input-panel {
+  margin-left: calc(36% + 48px);
+  border-top: 1px solid var(--bm-line);
+  border-bottom: 1px solid var(--bm-line);
+}
+
+.bm-input-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
-  gap: 22px;
+  grid-template-columns: 0.8fr 1.2fr;
 }
-.bm-table {
-  padding: 6px 22px 18px;
-  border: 1px solid var(--vp-c-divider);
-  border-radius: 12px;
-  background: var(--vp-c-bg-soft);
+
+.bm-input-group {
+  min-width: 0;
+  padding: 22px 24px 20px 0;
 }
-.bm-table h3 {
-  margin: 16px 0 10px;
-  font-size: 14px;
-  font-weight: 650;
-  letter-spacing: 0.04em;
-  text-transform: uppercase;
-  color: var(--vp-c-text-3);
+
+.bm-input-group + .bm-input-group {
+  padding-right: 0;
+  padding-left: 24px;
+  border-left: 1px solid var(--bm-line);
 }
-.bm-table table {
-  width: 100%;
-  border-collapse: collapse;
-}
-.bm-table tr + tr {
-  border-top: 1px solid var(--vp-c-divider);
-}
-.bm-table th,
-.bm-table td {
-  padding: 10px 0;
-  font-size: 14px;
-  text-align: left;
-  vertical-align: top;
-}
-.bm-table th {
-  width: 46%;
-  padding-right: 16px;
-  font-weight: 600;
-  font-family: var(--vp-font-family-mono);
+
+.bm-input-group h3 {
+  margin: 0 0 14px;
   font-size: 13px;
-  white-space: nowrap;
+  font-weight: 600;
   color: var(--vp-c-text-1);
 }
-.bm-table td {
+
+.bm-input-group dl {
+  margin: 0;
+}
+
+.bm-input-group dl > div {
+  display: grid;
+  grid-template-columns: minmax(90px, 0.42fr) minmax(0, 0.58fr);
+  gap: 14px;
+  align-items: baseline;
+  padding: 9px 0;
+  border-top: 1px solid var(--bm-line);
+}
+
+.bm-input-group dt {
+  font-family: var(--vp-font-family-mono);
+  font-size: 11px;
+  font-weight: 560;
+  color: var(--vp-c-text-1);
+}
+
+.bm-input-group dd {
+  margin: 0;
+  font-size: 12.5px;
+  line-height: 1.5;
   color: var(--vp-c-text-2);
 }
 
-/* 结尾 CTA */
-.bm-cta {
+.bm-about {
+  display: grid;
+  grid-template-columns: 140px minmax(0, 1fr);
+  gap: 40px;
+  align-items: start;
   max-width: var(--bm-max);
   margin: 0 auto;
-  padding: 56px 24px 88px;
-  text-align: center;
+  padding: 0 24px 64px;
+  scroll-margin-top: 86px;
 }
-.bm-cta p {
-  max-width: 560px;
-  margin: 10px auto 0;
-  font-size: 15px;
+
+.bm-about-text {
+  max-width: 820px;
+  margin: 0;
+  font-size: 14px;
+  line-height: 1.8;
+  color: var(--vp-c-text-2);
+}
+
+.bm-about-text a {
+  font-weight: 560;
+  color: var(--bm-accent-1);
+  text-decoration: none;
+}
+
+.bm-about-text a:hover {
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+.bm-disclaimer {
+  max-width: calc(var(--bm-max) - 48px);
+  margin: 0 auto;
+  padding: 24px 0;
+}
+
+.bm-disclaimer strong {
+  display: block;
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--bm-accent-1);
+}
+
+.bm-disclaimer p {
+  max-width: 960px;
+  margin: 10px 0 0;
+  font-size: 13px;
   line-height: 1.75;
   color: var(--vp-c-text-2);
 }
 
-/* 页脚 */
+.bm-download {
+  display: flex;
+  justify-content: center;
+  max-width: var(--bm-max);
+  margin: 0 auto;
+  padding: 64px 24px 80px;
+}
+
+.bm-download .bm-actions {
+  justify-content: center;
+  margin: 0;
+}
+
+.bm-download .bm-btn {
+  min-height: 52px;
+  min-width: 180px;
+  padding: 12px 22px;
+  font-size: 14px;
+}
+
 .bm-footer {
   display: flex;
   flex-wrap: wrap;
   align-items: center;
   justify-content: space-between;
-  gap: 14px;
+  gap: 18px;
   max-width: var(--bm-max);
   margin: 0 auto;
-  padding: 26px 24px 40px;
-  border-top: 1px solid var(--vp-c-divider);
-  font-size: 13.5px;
+  padding: 28px 24px 36px;
+  font-family: var(--vp-font-family-mono);
+  font-size: 10.5px;
+  letter-spacing: 0.035em;
   color: var(--vp-c-text-3);
 }
+
+.bm-footer-brand,
 .bm-footer nav {
   display: flex;
+  align-items: center;
+}
+
+.bm-footer-brand {
+  gap: 9px;
+}
+
+.bm-footer nav {
   flex-wrap: wrap;
   gap: 20px;
 }
+
 .bm-footer a {
   color: var(--vp-c-text-2);
   text-decoration: none;
 }
+
 .bm-footer a:hover {
-  color: var(--vp-c-brand-1);
+  color: var(--bm-accent-1);
 }
 
-@media (max-width: 640px) {
+@media (max-width: 980px) {
   .bm-hero {
-    padding: 56px 20px 44px;
+    grid-template-columns: 1fr;
+    gap: 52px;
+    min-height: 0;
+    padding-top: 66px;
   }
+
+  .bm-hero-copy {
+    max-width: 680px;
+  }
+
+  .bm-platform-showcase {
+    width: 100%;
+    max-width: 780px;
+    margin-left: auto;
+  }
+
+  .bm-section-head,
+  .bm-shortcuts .bm-section-head {
+    grid-template-columns: 1fr;
+    gap: 14px;
+  }
+
+  .bm-section-head .bm-kicker {
+    padding-top: 0;
+  }
+
+  .bm-shortcuts .bm-sub {
+    grid-column: auto;
+  }
+
+  .bm-feature-list,
+  .bm-input-panel {
+    margin-left: 0;
+  }
+}
+
+@media (max-width: 720px) {
+  .bm-hero {
+    padding: 48px 20px 58px;
+  }
+
+  .bm-hero h1 {
+    font-size: clamp(48px, 15vw, 72px);
+  }
+
+  .bm-platform-showcase {
+    grid-template-columns: minmax(0, 1fr) 112px;
+    gap: 12px;
+  }
+
+  .bm-section {
+    padding: 82px 20px;
+  }
+
+  .bm-feature {
+    grid-template-columns: 1fr;
+    gap: 8px;
+  }
+
+  .bm-input-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .bm-input-group,
+  .bm-input-group + .bm-input-group {
+    padding: 20px 0;
+    border-top: 1px solid var(--bm-line);
+    border-left: 0;
+  }
+
+  .bm-input-group dl > div {
+    grid-template-columns: minmax(110px, 0.42fr) minmax(0, 0.58fr);
+  }
+
+  .bm-about {
+    grid-template-columns: 1fr;
+    gap: 12px;
+    padding: 0 20px 52px;
+  }
+
+  .bm-disclaimer {
+    max-width: calc(100% - 40px);
+  }
+
+  .bm-download {
+    padding: 52px 20px 64px;
+  }
+}
+
+@media (max-width: 480px) {
+  .bm-platform-showcase {
+    grid-template-columns: 1fr;
+  }
+
+  .bm-mobile-shot {
+    width: min(148px, 58%);
+    justify-self: end;
+  }
+
+  .bm-hero .bm-actions,
+  .bm-download .bm-actions {
+    align-items: stretch;
+  }
+
+  .bm-btn {
+    flex: 1 1 100%;
+    justify-content: space-between;
+  }
+
+  .bm-text-link {
+    padding: 6px 0;
+  }
+
+  .bm-input-group dl > div {
+    grid-template-columns: 1fr;
+    gap: 4px;
+  }
+
+  .bm-footer {
+    align-items: flex-start;
+    flex-direction: column;
+  }
+
 }
 </style>

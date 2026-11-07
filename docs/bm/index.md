@@ -1,23 +1,25 @@
 ﻿---
 layout: bm-home
 title: BedrockMap — 基岩版地图编辑器
-description: 开源、高性能的 Minecraft 基岩版世界编辑器，支持地形、实体、生物群系、NBT 与 mcstructure。
+description: 开源免费、基于 C++ 的高性能 Minecraft 基岩版世界编辑器，支持国际版与网易版存档、多世界多工作区，并原生运行于 Windows 与 Android。
 hero:
   name: BedrockMap
-  tagline: Minecraft 基岩版世界编辑器
-  description: 基于 Qt6 与 C++17 开发的开源地图编辑器，直接读写 LevelDB 存档，用来浏览、检查与编辑基岩版世界的每一个区块。
-  note: 支持基岩版 1.2 ~ 1.21 存档 · 无需安装，解压即用
+  tagline: 开源免费、兼容网易版的高性能跨平台 Minecraft 基岩版世界编辑器
+  description: BedrockMap 使用 C++20 直接读写 LevelDB，实现超快的区块读取与地图渲染；可以同时打开多个世界，并在彼此独立的工作区之间快速切换。
   download: https://github.com/bedrock-dev/BedrockMap/releases/latest
-  screenshot: /imgs/bm-sample.png
-  ctaTitle: 现在就开始编辑你的世界
-  ctaText: 下载最新版本，打开存档文件夹即可看到整张地图。
-# 轮播图，追加条目即可；每项支持 src 和可选的 caption
+  screenshot: /imgs/sample_pc.png
+  mobileScreenshot: /imgs/sample_mobile.png
+# 首屏平台展示图，第一张用于桌面窗口，第二张用于移动设备
 screenshots:
-  - src: /imgs/bm-sample.png
-    caption: 地图总览 —— 地形、群系与实体叠加显示
+  - src: /imgs/sample_pc.png
+    caption: Windows 桌面端 —— 地图、区块编辑与 NBT 工作区
+  - src: /imgs/sample_mobile.png
+    caption: Android 移动端 —— 触控友好的体素与地图工作区
 features:
+  - title: 多世界 / 多工作区
+    details: 同时打开多个世界，并在独立的地图、NBT 和结构工作区之间快速切换，适合大型存档和多任务整理。
   - title: 世界浏览
-    details: 打开并浏览主世界、下界、末地与自定义维度的全部区块数据。
+    details: 打开国际版与网易版存档，浏览主世界、下界、末地与自定义维度的全部区块数据。
   - title: 地形可视化
     details: 生物群系地图与地形叠加渲染，渲染滤镜可自由配置。
   - title: 区块编辑器

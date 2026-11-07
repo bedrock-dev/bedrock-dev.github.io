@@ -1,0 +1,120 @@
+.bm {
+  --bm-max: 1240px;
+  --bm-accent-1: #2f7fbf;
+  --bm-accent-2: #7cae37;
+  --bm-accent-3: #d59b50;
+  --bm-accent-solid: #2f7fbf;
+  --bm-line: color-mix(in srgb, var(--vp-c-text-1) 14%, transparent);
+  --bm-line-strong: color-mix(in srgb, var(--vp-c-text-1) 26%, transparent);
+  min-height: 100vh;
+  color: var(--vp-c-text-1);
+  background: var(--vp-c-bg);
+}
+
+.dark .bm {
+  --bm-accent-1: #62a9e4;
+  --bm-accent-2: #9ac65a;
+  --bm-accent-3: #e1ad67;
+  --bm-accent-solid: #2f7fbf;
+  --bm-line: color-mix(in srgb, var(--vp-c-text-1) 14%, transparent);
+  --bm-line-strong: color-mix(in srgb, var(--vp-c-text-1) 26%, transparent);
+}
+
+.bm *,
+.bm *::before,
+.bm *::after {
+  box-sizing: border-box;
+}
+
+.bm main {
+  display: block;
+}
+
+.bm-kicker {
+  margin: 0;
+  font-size: 12px;
+  font-weight: 600;
+  line-height: 1.4;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: var(--bm-accent-1);
+}
+
+.bm-actions {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 10px;
+}
+
+.bm-btn,
+.bm-text-link {
+  font-family: var(--vp-font-family-base);
+  font-size: 13.5px;
+  font-weight: 580;
+  text-decoration: none;
+}
+
+.bm-btn {
+  display: inline-flex;
+  min-height: 42px;
+  align-items: center;
+  justify-content: center;
+  gap: 18px;
+  padding: 10px 16px;
+  border: 1px solid transparent;
+  border-radius: 0;
+  transition:
+    color 0.18s ease,
+    border-color 0.18s ease,
+    background 0.18s ease;
+}
+
+.bm-btn-primary {
+  color: #fff;
+  border-color: var(--bm-accent-solid);
+  background: var(--bm-accent-solid);
+}
+
+.bm-btn-primary:hover {
+  color: #fff;
+  border-color: color-mix(in srgb, var(--bm-accent-solid) 76%, #000);
+  background: color-mix(in srgb, var(--bm-accent-solid) 76%, #000);
+}
+
+.bm-btn-ghost {
+  color: var(--vp-c-text-1);
+  border-color: var(--bm-line-strong);
+  background: transparent;
+}
+
+.bm-btn-ghost:hover {
+  color: var(--vp-c-text-1);
+  border-color: var(--bm-accent-1);
+  background: color-mix(in srgb, var(--bm-accent-1) 7%, transparent);
+}
+
+.bm-text-link {
+  padding: 9px 5px;
+  color: var(--vp-c-text-2);
+}
+
+.bm-text-link:hover {
+  color: var(--bm-accent-1);
+}
+
+.bm :focus-visible {
+  outline: 2px solid var(--bm-accent-1);
+  outline-offset: 3px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .bm *,
+  .bm *::before,
+  .bm *::after {
+    scroll-behavior: auto !important;
+    transition-duration: 0.01ms !important;
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+  }
+}

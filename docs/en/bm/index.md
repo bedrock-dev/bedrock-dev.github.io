@@ -1,22 +1,25 @@
 ---
 layout: bm-home
 title: BedrockMap — Map editor for Minecraft Bedrock Edition
-description: Open-source, high-performance map editor for Minecraft Bedrock worlds — terrain, entities, biomes, NBT and mcstructure.
+description: A free, open-source, high-performance C++ map editor for Minecraft Bedrock worlds, with NetEase Edition support, multiple workspaces, Windows and Android.
 hero:
   name: BedrockMap
-  tagline: Map editor for Minecraft Bedrock Edition
-  description: An open-source map editor built with Qt6 and C++17. It reads and writes LevelDB world saves directly, letting you browse, inspect and edit every chunk of a Bedrock world.
-  note: Supports Bedrock 1.2 – 1.21 worlds · No installer, just unpack and run
+  tagline: Free, open-source, high-performance cross-platform Minecraft Bedrock world editor with NetEase Edition support
+  description: BedrockMap uses C++20 to read and write LevelDB directly, with fast chunk loading and map rendering. Open multiple worlds and switch between independent workspaces without losing your place.
   download: https://github.com/bedrock-dev/BedrockMap/releases/latest
-  ctaTitle: Start editing your world
-  ctaText: Download the latest release and open your world folder to see the whole map.
-# Carousel — append entries to add slides; each supports src and an optional caption
+  screenshot: /imgs/sample_pc.png
+  mobileScreenshot: /imgs/sample_mobile.png
+# Platform images — the first is shown in the desktop window, the second in the mobile device
 screenshots:
-  - src: /imgs/bm-sample.png
-    caption: Map overview — terrain, biomes and entities overlaid
+  - src: /imgs/sample_pc.png
+    caption: Windows desktop — map, chunk editing and NBT workspace
+  - src: /imgs/sample_mobile.png
+    caption: Android — touch-friendly voxel and map workspace
 features:
+  - title: Multiple worlds / workspaces
+    details: Open several worlds at once and switch between independent map, NBT and structure workspaces without closing your current task.
   - title: World browsing
-    details: Open and explore every chunk of the Overworld, Nether, The End and custom dimensions.
+    details: Open international and NetEase Edition worlds and explore every chunk of the Overworld, Nether, The End and custom dimensions.
   - title: Terrain visualization
     details: Biome maps and terrain overlays, with configurable rendering filters.
   - title: Chunk editor

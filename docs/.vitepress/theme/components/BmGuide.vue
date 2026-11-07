@@ -8,6 +8,7 @@ const guides = computed(() => frontmatter.value.guides ?? []);
 
 const navLinks = [
   { text: "主页", href: "/bm/" },
+  { text: "平台", href: "/bm/#platforms" },
   { text: "快捷键", href: "/bm/#shortcuts" },
   {
     text: "源码",
@@ -21,152 +22,214 @@ const navLinks = [
   <div class="bm">
     <BmNav :links="navLinks" />
 
-    <section class="bm-head">
-      <p class="bm-badge">教程</p>
-      <h1>使用教程</h1>
-      <p class="bm-intro">{{ frontmatter.intro }}</p>
-    </section>
+    <main>
+      <section class="bm-guide-hero">
+        <div>
+          <p class="bm-kicker">BedrockMap guide</p>
+          <h1>使用教程</h1>
+        </div>
+        <div class="bm-guide-intro">
+          <p>{{ frontmatter.intro }}</p>
+        </div>
+      </section>
 
-    <section class="bm-cards">
-      <ul>
-        <li v-for="(g, i) in guides" :key="g.link">
-          <a :href="g.link">
-            <span class="bm-num">{{ String(i + 1).padStart(2, "0") }}</span>
-            <h2>{{ g.title }}</h2>
-            <p>{{ g.details }}</p>
-            <span class="bm-more">阅读教程 →</span>
-          </a>
-        </li>
-      </ul>
-    </section>
+      <section class="bm-guide-index">
+        <ol>
+          <li v-for="(g, i) in guides" :key="g.link">
+            <a :href="g.link">
+              <span class="bm-index-num">{{ String(i + 1).padStart(2, "0") }}</span>
+              <span class="bm-index-content">
+                <strong>{{ g.title }}</strong>
+                <span>{{ g.details }}</span>
+              </span>
+              <span class="bm-index-more">阅读 <i aria-hidden="true">→</i></span>
+            </a>
+          </li>
+        </ol>
+      </section>
+    </main>
+
+    <footer class="bm-guide-footer">
+      <a href="/bm/">← 返回 BedrockMap</a>
+      <span>BEDROCKMAP / DOCUMENTATION</span>
+    </footer>
   </div>
 </template>
 
 <style scoped>
-.bm {
-  --bm-max: 1120px;
-  min-height: 100vh;
-  background: var(--vp-c-bg);
-}
-
-.bm-head {
-  position: relative;
+.bm-guide-hero {
+  display: grid;
+  grid-template-columns: minmax(0, 1.05fr) minmax(320px, 0.95fr);
+  gap: 72px;
+  align-items: end;
   max-width: var(--bm-max);
   margin: 0 auto;
-  padding: 64px 24px 8px;
-  text-align: center;
+  padding: 96px 24px 72px;
+  border-bottom: 1px solid var(--bm-line);
 }
-.bm-head::before {
-  content: "";
-  position: absolute;
-  inset: -120px 0 auto;
-  height: 380px;
-  pointer-events: none;
-  background: radial-gradient(
-    60% 100% at 50% 0%,
-    color-mix(in srgb, var(--vp-c-brand-1) 18%, transparent),
-    transparent 70%
-  );
-}
-.bm-badge {
-  position: relative;
-  display: inline-block;
-  margin: 0 0 18px;
-  padding: 5px 13px;
-  border: 1px solid var(--vp-c-divider);
-  border-radius: 999px;
-  font-size: 12.5px;
-  letter-spacing: 0.08em;
-  color: var(--vp-c-text-2);
-  background: var(--vp-c-bg-soft);
-}
-.bm-head h1 {
-  position: relative;
-  margin: 0;
-  font-size: clamp(30px, 5vw, 42px);
-  font-weight: 800;
-  letter-spacing: -0.03em;
+
+.bm-guide-hero h1 {
+  margin: 24px 0 0;
+  font-size: clamp(54px, 8vw, 94px);
+  font-weight: 730;
+  line-height: 0.95;
+  letter-spacing: -0.065em;
   color: var(--vp-c-text-1);
 }
-.bm-intro {
-  position: relative;
-  max-width: 620px;
-  margin: 14px auto 0;
-  font-size: 15.5px;
-  line-height: 1.75;
+
+.bm-guide-intro p {
+  max-width: 560px;
+  margin: 0;
+  font-size: clamp(17px, 2vw, 21px);
+  line-height: 1.65;
   color: var(--vp-c-text-2);
 }
 
-.bm-cards {
+.bm-guide-index {
   max-width: var(--bm-max);
   margin: 0 auto;
-  padding: 44px 24px 88px;
+  padding: 40px 24px 104px;
 }
-.bm-cards ul {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-  gap: 18px;
+
+.bm-guide-index ol {
   margin: 0;
   padding: 0;
+  border-top: 1px solid var(--bm-line-strong);
   list-style: none;
 }
-.bm-cards a {
-  position: relative;
-  display: block;
-  height: 100%;
-  padding: 24px 24px 22px;
-  border: 1px solid var(--vp-c-divider);
-  border-radius: 12px;
-  background: var(--vp-c-bg-soft);
-  text-decoration: none;
-  transition:
-    border-color 0.2s,
-    transform 0.2s,
-    box-shadow 0.2s;
-}
-.bm-cards a:hover {
-  border-color: color-mix(
-    in srgb,
-    var(--vp-c-brand-1) 55%,
-    var(--vp-c-divider)
-  );
-  transform: translateY(-2px);
-  box-shadow: 0 18px 40px -28px rgba(0, 0, 0, 0.5);
-}
-.bm-num {
-  display: block;
-  margin-bottom: 14px;
-  font-family: var(--vp-font-family-mono);
-  font-size: 13px;
-  font-weight: 600;
-  letter-spacing: 0.06em;
-  color: var(--vp-c-brand-1);
-}
-.bm-cards h2 {
-  margin: 0 0 8px;
-  font-size: 17px;
-  font-weight: 650;
-  letter-spacing: -0.01em;
-  color: var(--vp-c-text-1);
-}
-.bm-cards p {
-  margin: 0 0 18px;
-  font-size: 14px;
-  line-height: 1.7;
-  color: var(--vp-c-text-2);
-}
-.bm-more {
-  font-size: 13.5px;
-  font-weight: 600;
-  color: var(--vp-c-brand-1);
+
+.bm-guide-index li {
+  border-bottom: 1px solid var(--bm-line);
 }
 
-@media (max-width: 640px) {
-  .bm-head {
-    padding: 44px 20px 4px;
+.bm-guide-index a {
+  display: grid;
+  grid-template-columns: 64px minmax(0, 1fr) 90px;
+  gap: 24px;
+  align-items: center;
+  padding: 28px 8px 28px 0;
+  color: var(--vp-c-text-1);
+  text-decoration: none;
+}
+
+.bm-guide-index a:hover {
+  color: var(--bm-accent-1);
+}
+
+.bm-index-num {
+  align-self: start;
+  padding-top: 3px;
+  font-family: var(--vp-font-family-mono);
+  font-size: 11px;
+  letter-spacing: 0.08em;
+  color: var(--bm-accent-1);
+}
+
+.bm-index-content {
+  display: grid;
+  grid-template-columns: minmax(170px, 0.34fr) minmax(0, 0.66fr);
+  gap: 34px;
+  align-items: start;
+}
+
+.bm-index-content strong {
+  font-size: clamp(19px, 2.2vw, 25px);
+  font-weight: 620;
+  line-height: 1.35;
+  letter-spacing: -0.025em;
+}
+
+.bm-index-content > span {
+  max-width: 620px;
+  font-size: 14px;
+  line-height: 1.72;
+  color: var(--vp-c-text-2);
+}
+
+.bm-index-more {
+  justify-self: end;
+  font-family: var(--vp-font-family-mono);
+  font-size: 10px;
+  letter-spacing: 0.04em;
+  color: var(--vp-c-text-3);
+}
+
+.bm-index-more i {
+  display: inline-block;
+  margin-left: 5px;
+  font-style: normal;
+  transition: transform 0.2s ease;
+}
+
+.bm-guide-index a:hover .bm-index-more {
+  color: var(--bm-accent-1);
+}
+
+.bm-guide-index a:hover .bm-index-more i {
+  transform: translateX(4px);
+}
+
+.bm-guide-footer {
+  display: flex;
+  justify-content: space-between;
+  gap: 20px;
+  max-width: var(--bm-max);
+  margin: 0 auto;
+  padding: 28px 24px 36px;
+  border-top: 1px solid var(--bm-line);
+  font-family: var(--vp-font-family-mono);
+  font-size: 10px;
+  letter-spacing: 0.04em;
+  color: var(--vp-c-text-3);
+}
+
+.bm-guide-footer a {
+  color: var(--vp-c-text-2);
+  text-decoration: none;
+}
+
+.bm-guide-footer a:hover {
+  color: var(--bm-accent-1);
+}
+
+@media (max-width: 760px) {
+  .bm-guide-hero {
+    grid-template-columns: 1fr;
+    gap: 38px;
+    padding: 66px 20px 52px;
   }
-  .bm-cards {
-    padding: 32px 20px 64px;
+
+  .bm-guide-index {
+    padding: 32px 20px 76px;
+  }
+
+  .bm-guide-index a {
+    grid-template-columns: 38px minmax(0, 1fr) 22px;
+    gap: 12px;
+    padding: 22px 0;
+  }
+
+  .bm-index-content {
+    grid-template-columns: 1fr;
+    gap: 8px;
+  }
+
+  .bm-index-more {
+    width: 22px;
+    overflow: hidden;
+    font-size: 0;
+    white-space: nowrap;
+  }
+
+  .bm-index-more i {
+    margin-left: 0;
+    font-size: 11px;
+  }
+
+  .bm-guide-footer {
+    align-items: flex-start;
+    flex-direction: column;
+    padding: 24px 20px 32px;
   }
 }
 </style>
